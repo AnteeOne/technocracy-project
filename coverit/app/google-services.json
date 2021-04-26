@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1023036855033",
+    "project_id": "coverit-6137a",
+    "storage_bucket": "coverit-6137a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023036855033:android:59043756b6ee51b3b44828",
+        "android_client_info": {
+          "package_name": "com.anteeone.coverit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023036855033-8uoo9360r09u0hf3m23ddonje7s6g7ck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anteeone.coverit",
+            "certificate_hash": "2e0784f9e35376136fdcbd4fe11754979f0f7581"
+          }
+        },
+        {
+          "client_id": "1023036855033-hk6ue9kq2fgtin165h0b0k1na1obngdp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_UkNNwv8bjIMK_CqlKruwKLQOxV2I6NQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023036855033-hk6ue9kq2fgtin165h0b0k1na1obngdp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
