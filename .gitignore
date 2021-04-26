@@ -32,6 +32,7 @@ proguard/
 
 # Android Studio captures folder
 captures/
+*.jar
 
 # Intellij
 *.iml
@@ -116,3 +117,6 @@ gradle-app.setting
 coverit/.idea/jarRepositories.xml
 coverit/.idea/vcs.xml
 coverit/.idea/gradle.xml
+coverit/gradlew
+coverit/gradlew.bat
+coverit/app/proguard-rules.pro
