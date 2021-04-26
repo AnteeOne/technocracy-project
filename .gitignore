@@ -94,7 +94,7 @@ fabric.properties
 
 modules.xml
 .idea/misc.xml 
-idea/
+coverit/.idea/
 *.ipr
 
 
