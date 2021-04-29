@@ -4,8 +4,8 @@ import com.google.firebase.auth.FirebaseUser
 
 interface IAuthRepository {
 
-    suspend fun login(email: String, password: String): FirebaseUser?;
+    suspend fun login(email: String, password: String): FirebaseUser;
 
-    suspend fun register(email: String, password: String, repeatPassword: String): Boolean;
+    suspend fun register(email: String, password: String): Boolean;
 
 }

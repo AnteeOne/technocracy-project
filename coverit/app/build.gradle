@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -31,12 +32,18 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    kapt{
+        generateStubs = true
+    }
 }
 
 dependencies {
 
     def swipecards_version = "1.0.9"
     def nav_version = "2.3.5"
+    def nav_compose_version = "1.0.0-alpha10"
+    def firebase_version = "27.1.0"
+    def dagger_version = "2.35.1"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'
@@ -64,14 +71,20 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     // Jetpack Compose Integration
-    implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
+    implementation "androidx.navigation:navigation-compose:$nav_compose_version"
     //endregion
 
     //region Firebase
-    implementation platform('com.google.firebase:firebase-bom:27.1.0')
+    implementation platform("com.google.firebase:firebase-bom:$firebase_version")
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
+    //endregion
+
+    //region Dagger2
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     //endregion
 
 }
