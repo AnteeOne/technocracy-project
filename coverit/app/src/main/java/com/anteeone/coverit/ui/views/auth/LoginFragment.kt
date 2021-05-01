@@ -87,11 +87,10 @@ class LoginFragment : BaseFragment() {
             is LoginViewModel.AuthenticationState.Empty -> {
             }
             is LoginViewModel.AuthenticationState.Failed -> {
-                showToast("Auth error")
-                context?.let { showToast(it, "Auth error") }
+                showToast("Incorrect Email OR Password!")
             }
             is LoginViewModel.AuthenticationState.Authenticated -> {
-                context?.let { showToast(it, authState.firebaseUser.email) }
+                showToast(authState.firebaseUser.email)
             }
         }
     }

@@ -85,8 +85,7 @@ class RegisterFragment : BaseFragment() {
             is RegisterViewModel.AuthenticationState.Empty -> {
             }
             is RegisterViewModel.AuthenticationState.Failed -> {
-                showToast("Auth error")
-                context?.let { showToast(it, "Auth error") }
+                showToast("Incorrect Email OR Password!")
             }
             is RegisterViewModel.AuthenticationState.Success -> {
                 showToast("Account has been created!")
