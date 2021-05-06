@@ -2,6 +2,8 @@ package com.anteeone.coverit.di.modules
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -18,4 +20,9 @@ class NetworkModule {
     @Singleton
     fun providesFirebaseDatabase(): FirebaseFirestore =
         FirebaseFirestore.getInstance()
+
+    @Provides
+    @Singleton
+    fun providesFireStorageReference(): StorageReference =
+        FirebaseStorage.getInstance().reference
 }

@@ -1,5 +1,6 @@
 package com.anteeone.coverit.data.repositories
 
+import android.graphics.Bitmap
 import com.anteeone.coverit.domain.models.User
 import com.anteeone.coverit.domain.repositories.IUsersRepository
 import com.google.firebase.auth.FirebaseAuth

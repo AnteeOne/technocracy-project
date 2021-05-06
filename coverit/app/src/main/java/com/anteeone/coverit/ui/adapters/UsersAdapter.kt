@@ -3,10 +3,12 @@ package com.anteeone.coverit.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anteeone.coverit.R
 import com.anteeone.coverit.domain.models.User
+import com.anteeone.coverit.ui.utils.extensions.loadImage
 
 class UsersAdapter: RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
 
@@ -15,9 +17,13 @@ class UsersAdapter: RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
     class UsersViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         private val titleView: TextView = itemView.findViewById(R.id.swipe_card_item_title)
+        private val roleView: TextView = itemView.findViewById(R.id.swipe_card_item_role)
+        private val imageView: ImageView = itemView.findViewById(R.id.swipe_card_item_avatar)
 
         fun bind(user: User){
             titleView.text = user.name
+            roleView.text = user.role
+            imageView.loadImage(user.avatarUri)
         }
 
     }
