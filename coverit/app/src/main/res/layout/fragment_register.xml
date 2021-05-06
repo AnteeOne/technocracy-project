@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@color/transparent"
     tools:context=".ui.views.auth.RegisterFragment">
 
     <TextView
@@ -41,6 +41,8 @@
         android:background="@color/gray_transparent"
         android:ems="10"
         android:hint="Email"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray"
         android:inputType="textEmailAddress"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/fr_register_et_password"
@@ -57,6 +59,8 @@
         android:background="@color/gray_transparent"
         android:ems="10"
         android:hint="Password"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray"
         android:inputType="textPassword"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/fr_register_et_rpassword"
@@ -73,6 +77,8 @@
         android:ems="10"
         android:hint="Repeat password"
         android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/fr_register_button_signup"
         app:layout_constraintEnd_toEndOf="@+id/fr_register_button_signup"
@@ -96,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="40dp" />
+        app:layout_constraintGuide_begin="48dp" />
 
     <ImageView
         android:id="@+id/fr_register_button_back"

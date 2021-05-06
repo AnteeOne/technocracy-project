@@ -3,8 +3,10 @@ package com.anteeone.coverit.di.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.anteeone.coverit.di.annotations.ViewModelKey
-import com.anteeone.coverit.ui.viewmodels.LoginViewModel
-import com.anteeone.coverit.ui.viewmodels.RegisterViewModel
+import com.anteeone.coverit.ui.viewmodels.domain.HomeViewModel
+import com.anteeone.coverit.ui.viewmodels.auth.LoginViewModel
+import com.anteeone.coverit.ui.viewmodels.auth.RegisterViewModel
+import com.anteeone.coverit.ui.viewmodels.domain.ProfileSettingsViewModel
 import com.anteeone.coverit.ui.viewmodels.factory.ViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -28,4 +30,13 @@ abstract class ViewModelModule {
     @ViewModelKey(RegisterViewModel::class)
     abstract fun bindsRegisterViewModel(registerViewModel: RegisterViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeViewModel::class)
+    abstract fun bindsHomeViewModel(registerViewModel: HomeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileSettingsViewModel::class)
+    abstract fun bindsProfileSettingsViewModel(profileSettingsViewModel: ProfileSettingsViewModel): ViewModel
 }

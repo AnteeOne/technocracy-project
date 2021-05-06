@@ -1,5 +1,6 @@
 package com.anteeone.coverit.ui.views.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,16 +9,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.anteeone.coverit.R
 import com.anteeone.coverit.ui.utils.extensions.insertViewModel
-import com.anteeone.coverit.ui.utils.extensions.showToast
 import com.anteeone.coverit.ui.utils.validators.AuthValidator
 import com.anteeone.coverit.ui.utils.validators.AuthValidator.SignInResult
-import com.anteeone.coverit.ui.viewmodels.LoginViewModel
+import com.anteeone.coverit.ui.viewmodels.auth.LoginViewModel
 import com.anteeone.coverit.ui.views.BaseFragment
+import com.anteeone.coverit.ui.views.domain.MainActivity
 
 class LoginFragment : BaseFragment() {
 
@@ -91,6 +91,11 @@ class LoginFragment : BaseFragment() {
             }
             is LoginViewModel.AuthenticationState.Authenticated -> {
                 showToast(authState.firebaseUser.email)
+                val intent = Intent(context, MainActivity::class.java)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                activity?.finish()
+                startActivity(intent)
+                //todo:recode this :)
             }
         }
     }

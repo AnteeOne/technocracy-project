@@ -8,16 +8,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.anteeone.coverit.R
 import com.anteeone.coverit.ui.utils.extensions.insertViewModel
-import com.anteeone.coverit.ui.utils.extensions.showToast
 import com.anteeone.coverit.ui.utils.validators.AuthValidator
 import com.anteeone.coverit.ui.utils.validators.AuthValidator.SignUpResult
-import com.anteeone.coverit.ui.viewmodels.LoginViewModel
-import com.anteeone.coverit.ui.viewmodels.RegisterViewModel
+import com.anteeone.coverit.ui.viewmodels.auth.RegisterViewModel
 import com.anteeone.coverit.ui.views.BaseFragment
 
 class RegisterFragment : BaseFragment() {

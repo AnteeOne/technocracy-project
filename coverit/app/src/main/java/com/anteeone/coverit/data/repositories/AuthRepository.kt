@@ -1,5 +1,6 @@
 package com.anteeone.coverit.data.repositories
 
+import android.util.Log
 import com.anteeone.coverit.domain.repositories.IAuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -20,13 +21,24 @@ class AuthRepository(private val firebaseAuth: FirebaseAuth): IAuthRepository {
                 }
     }
 
-
-    override suspend fun register(email: String, password: String): Boolean = suspendCancellableCoroutine{cor ->
-        firebaseAuth.createUserWithEmailAndPassword(email,password)
-            .addOnSuccessListener {
-                cor.resumeWith(Result.success(true))
-            }.addOnFailureListener {
-                cor.resumeWith(Result.success(false))
-            } 
+    override suspend fun register(email: String, password: String): FirebaseUser = suspendCancellableCoroutine{cor ->
+        try {
+            firebaseAuth.createUserWithEmailAndPassword(email,password)
+                .addOnSuccessListener {
+                    cor.resumeWith(Result.success(it.user!!))
+                }.addOnFailureListener {
+                    cor.resumeWith(Result.failure(IllegalStateException("User sign up error")))
+                }
+        }
+        catch (ex: Exception){
+            cor.resumeWith(Result.failure(ex))
+        }
     }
+
+    override fun getCurrentUser(): FirebaseUser? {
+            val firebaseUser = firebaseAuth.currentUser
+            Log.println(Log.INFO,"coverit-tag","Auto logged in as ${firebaseUser.uid}")
+            return firebaseUser
+        }
+
 }
