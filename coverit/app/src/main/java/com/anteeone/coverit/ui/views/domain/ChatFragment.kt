@@ -1,4 +1,4 @@
-package com.anteeone.coverit.ui.views
+package com.anteeone.coverit.ui.views.domain
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.anteeone.coverit.R
 
-class RegisterFragment : Fragment() {
+
+class ChatFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,8 +18,7 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_register, container, false)
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_chat, container, false)
     }
-
 }
