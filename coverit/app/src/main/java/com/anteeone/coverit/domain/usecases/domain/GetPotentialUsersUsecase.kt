@@ -17,7 +17,6 @@ class GetPotentialUsersUsecase @Inject constructor(
             return Outcome.Success(users)
         }
         catch (ex:Exception){
-            ex.printStackTrace()
             return Outcome.Failure(ex)
         }
     }

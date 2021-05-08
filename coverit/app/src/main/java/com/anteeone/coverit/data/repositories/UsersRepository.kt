@@ -39,12 +39,17 @@ class UsersRepository @Inject constructor(
             val potentialUsers = usersCollection
             potentialUsers.get().addOnSuccessListener {
                 it.toObjects(User::class.java).let { users ->
-                    val currentUser = users.filter {user -> user.id == firebaseAuth.uid }[0]
-                    val exceptList:List<String> = currentUser.likes + currentUser.dislikes
-                    val potentialUsersList = users
-                        .filter { user -> user.id != firebaseAuth.currentUser.uid  }
-                        .filter { user -> !exceptList.contains(user.id) }
-                    cor.resumeWith(Result.success(potentialUsersList))
+                    try {
+                        val currentUser = users.filter {user -> user.id == firebaseAuth.uid }[0]
+                        val exceptList:List<String> = currentUser.likes + currentUser.dislikes
+                        val potentialUsersList = users
+                            .filter { user -> user.id != firebaseAuth.currentUser.uid  }
+                            .filter { user -> !exceptList.contains(user.id) }
+                        cor.resumeWith(Result.success(potentialUsersList))
+                    }
+                    catch (ex:Exception){
+                        cor.resumeWith(Result.failure(IllegalStateException("Getting users error")))
+                    }
                 }
             }.addOnFailureListener {
                 cor.resumeWith(Result.failure(IllegalStateException("Getting users error")))

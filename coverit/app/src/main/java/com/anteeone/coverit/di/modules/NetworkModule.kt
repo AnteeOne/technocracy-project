@@ -2,6 +2,7 @@ package com.anteeone.coverit.di.modules
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.Module
@@ -19,7 +20,12 @@ class NetworkModule {
     @Provides
     @Singleton
     fun providesFirebaseDatabase(): FirebaseFirestore =
-        FirebaseFirestore.getInstance()
+        FirebaseFirestore.getInstance().also {
+            it.firestoreSettings = FirebaseFirestoreSettings
+                .Builder()
+                .setPersistenceEnabled(false)
+                .build()
+        }
 
     @Provides
     @Singleton
