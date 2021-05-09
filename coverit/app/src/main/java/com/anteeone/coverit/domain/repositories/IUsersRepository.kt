@@ -1,5 +1,6 @@
 package com.anteeone.coverit.domain.repositories
 
+import android.graphics.Bitmap
 import com.anteeone.coverit.domain.models.User
 
 interface IUsersRepository {
@@ -7,6 +8,8 @@ interface IUsersRepository {
     suspend fun getAllUsers():List<User>
 
     suspend fun getAllPotentialUsers():List<User>
+
+    suspend fun getAllMatchingUsers(): List<User>
 
     suspend fun addUser(user: User): User
 

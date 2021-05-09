@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_home"
-    tools:context=".ui.views.domain.ProfileFragment">
+    tools:context=".ui.views.domain.UserFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_124"
@@ -36,24 +36,24 @@
         app:layout_constraintGuide_begin="88dp" />
 
     <ImageView
-        android:id="@+id/fr_profile_btn_change"
+        android:id="@+id/fr_user_btn_back"
         android:layout_width="@dimen/imageButtonSize"
         android:layout_height="@dimen/imageButtonSize"
-        android:src="@drawable/profile_settings"
+        android:src="@drawable/arrow_back"
         app:layout_constraintBottom_toTopOf="@+id/guideline114"
-        app:layout_constraintEnd_toStartOf="@+id/guideline104"
+        app:layout_constraintStart_toStartOf="@+id/guideline64"
         app:layout_constraintTop_toTopOf="@+id/guideline_124" />
 
     <TextView
         android:id="@+id/textView"
+        style="@style/AppBarTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/profile"
+        android:text="@string/details"
         app:layout_constraintBottom_toTopOf="@+id/guideline114"
         app:layout_constraintEnd_toStartOf="@+id/guideline104"
         app:layout_constraintStart_toStartOf="@+id/guideline64"
-        app:layout_constraintTop_toTopOf="@+id/guideline_124"
-        style="@style/AppBarTextView" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_124" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
@@ -62,8 +62,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
-        app:cardCornerRadius="24dp"
         app:cardBackgroundColor="@color/gray_transparent"
+        app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/fr_profile_text_name"
+                android:id="@+id/fr_user_text_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -103,7 +103,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/fr_profile_avatar" />
 
             <TextView
-                android:id="@+id/fr_profile_text_role"
+                android:id="@+id/fr_user_text_role"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -113,10 +113,10 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/fr_profile_avatar"
                 app:layout_constraintStart_toStartOf="@+id/fr_profile_avatar"
-                app:layout_constraintTop_toBottomOf="@+id/fr_profile_text_name" />
+                app:layout_constraintTop_toBottomOf="@+id/fr_user_text_name" />
 
             <TextView
-                android:id="@+id/fr_profile_text_age"
+                android:id="@+id/fr_user_text_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="11dp"
@@ -124,11 +124,11 @@
                 android:text="@string/age"
                 android:textColor="@color/gray"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/fr_profile_text_role"
+                app:layout_constraintBottom_toTopOf="@+id/fr_user_text_role"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fr_profile_text_name"
+                app:layout_constraintTop_toBottomOf="@+id/fr_user_text_name"
                 app:layout_constraintVertical_bias="0.0" />
 
             <androidx.cardview.widget.CardView
@@ -144,11 +144,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fr_profile_text_role">
+                app:layout_constraintTop_toBottomOf="@+id/fr_user_text_role">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="260dp">
+                    android:layout_height="match_parent">
 
 
                     <TextView
@@ -173,7 +173,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
                         <TextView
-                            android:id="@+id/fr_profile_text_about"
+                            android:id="@+id/fr_user_text_about"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
@@ -182,8 +182,7 @@
                             android:fontFamily="sans-serif"
                             android:text="@string/about_multi"
                             android:textColor="@color/gray"
-                            android:textSize="15sp" />
-
+                            android:textSize="16sp" />
                     </ScrollView>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -191,7 +190,7 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/fr_profile_btn_video"
+                android:id="@+id/fr_user_btn_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="113dp"
@@ -208,13 +207,5 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <ImageView
-        android:id="@+id/fr_profile_btn_logout"
-        android:layout_width="@dimen/imageButtonSize"
-        android:layout_height="@dimen/imageButtonSize"
-        android:src="@drawable/logout"
-        app:layout_constraintBottom_toTopOf="@+id/guideline114"
-        app:layout_constraintStart_toStartOf="@+id/guideline64"
-        app:layout_constraintTop_toTopOf="@+id/guideline_124" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

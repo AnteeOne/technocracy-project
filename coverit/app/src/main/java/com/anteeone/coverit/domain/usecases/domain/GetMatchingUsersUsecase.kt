@@ -7,16 +7,16 @@ import com.anteeone.coverit.domain.utils.Outcome
 import java.lang.Exception
 import javax.inject.Inject
 
-class GetPotentialUsersUsecase @Inject constructor(
+class GetMatchingUsersUsecase @Inject constructor(
     private val usersRepository: IUsersRepository
-): Usecase<List<User>, GetPotentialUsersUsecase.Params>() {
+): Usecase<List<User>, GetMatchingUsersUsecase.Params>() {
 
     override suspend fun run(params: Params): Outcome<List<User>> {
         try {
-            val users = usersRepository.getAllPotentialUsers()
+            val users = usersRepository.getAllMatchingUsers()
             return Outcome.Success(users)
         }
-        catch (ex:Exception){
+        catch (ex: Exception){
             return Outcome.Failure(ex)
         }
     }

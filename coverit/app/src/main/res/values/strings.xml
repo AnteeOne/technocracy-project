@@ -8,4 +8,17 @@
     <string name="sex">Sex</string>
     <string name="age">Age</string>
     <string name="name">Name</string>
+    <string name="details">Details</string>
+    <string name="profile">Profile</string>
+    <string name="discover">Discover</string>
+    <string name="about_multi">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et varius elit. Fusce eget pulvinar mauris, et molestie arcu. Aenean imperdiet congue fringilla. Suspendisse efficitur mi magna, pulvinar pretium lacus vestibulum eget. Mauris dolor metus, convallis quis sagittis vel, facilisis consequat dui. Donec vel augue sit amet ipsum tristique aliquam. Nam laoreet mollis enim egestas gravida. Etiam quis dui hendrerit, congue risus vitae, accumsan mi. </string>
+    <string name="video">Video</string>
+    <string name="title">Title</string>
+    <string name="artist">Artist</string>
+    <string name="dtitle">Montero (Call Me By Your Name)</string>
+    <string name="dartist">Lil Nas X</string>
+    <string name="dcount">3756285</string>
+    <string name="matches">Matches</string>
+    <string name="charts">Top 30</string>x
+
 </resources>

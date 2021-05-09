@@ -1,17 +1,20 @@
 package com.anteeone.coverit.ui.viewmodels.domain
 
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anteeone.coverit.domain.models.User
 import com.anteeone.coverit.domain.usecases.domain.GetUserUsecase
 import com.anteeone.coverit.domain.usecases.domain.UpdateUserUsecase
+import com.anteeone.coverit.domain.usecases.domain.UploadAvatarUsecase
 import com.anteeone.coverit.domain.utils.Outcome
 import javax.inject.Inject
 
 class ProfileSettingsViewModel @Inject constructor(
     private val getUserUsecase: GetUserUsecase,
-    private val updateUserUsecase: UpdateUserUsecase
+    private val updateUserUsecase: UpdateUserUsecase,
+    private val uploadAvatarUsecase: UploadAvatarUsecase
 ): ViewModel() {
 
     sealed class UserDataState{
@@ -53,6 +56,19 @@ class ProfileSettingsViewModel @Inject constructor(
                 }
                 is Outcome.Failure -> {
                     userUpdatingStateLiveData.postValue(UserUpdatingState.Failed)
+                }
+            }
+        }
+    }
+
+    fun saveImage(bitmapImage: Bitmap){
+        uploadAvatarUsecase.invoke(viewModelScope,UploadAvatarUsecase.Params(bitmapImage)){
+            when(it){
+                is Outcome.Success -> {
+                    //todo:handle this
+                }
+                is Outcome.Failure -> {
+                    //todo:handle this
                 }
             }
         }

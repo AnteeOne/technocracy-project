@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.anteeone.coverit.R
@@ -20,9 +21,13 @@ class HomeFragment : BaseFragment(), CardStackListener {
 
     private lateinit var viewModel: HomeViewModel;
 
+
+    private lateinit var mMatchesButton: ImageView
     private lateinit var mCardStackView: CardStackView
-    private lateinit var arrayAdapter: ArrayAdapter<String>
-    private val mAdapter = UsersAdapter()
+    private val mAdapter = UsersAdapter{
+        val action = HomeFragmentDirections.actionHomeFragmentToUserFragment(it)
+        navController.navigate(action)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +54,7 @@ class HomeFragment : BaseFragment(), CardStackListener {
 
     override fun initMembers(view: View) {
         mCardStackView = view.findViewById(R.id.fr_home_fling_container)
+        mMatchesButton = view.findViewById(R.id.fr_home_btn_matches)
         mCardStackView.also {
             it.adapter = mAdapter
             it.layoutManager = CardStackLayoutManager(context, this).also {
@@ -58,7 +64,9 @@ class HomeFragment : BaseFragment(), CardStackListener {
     }
 
     override fun initListeners() {
-
+        mMatchesButton.setOnClickListener {
+            navController.navigate(R.id.action_homeFragment_to_matchesFragment)
+        }
     }
 
     override fun initNavigation() {

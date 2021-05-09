@@ -1,5 +1,9 @@
 package com.anteeone.coverit.domain.models
 
+import java.io.Serializable
+
+val DEFAULT_AVATAR_URI = "https://i.insider.com/602ee9ced3ad27001837f2ac"
+
 data class User(
     val id: String="",
     val name: String = "",
@@ -8,8 +12,9 @@ data class User(
     val role: String = "",
     val about: String = "",
     val likes: List<String> = emptyList(),
-    val dislikes: List<String> = emptyList()
-){
+    val dislikes: List<String> = emptyList(),
+    val avatarUri: String = DEFAULT_AVATAR_URI
+):Serializable {
     fun toMap(): HashMap<String,Any>
         = hashMapOf(
             Pair("id", this.id),
@@ -25,6 +30,7 @@ data class User(
         if(this.role != "") result["role"] = this.role
         if(this.sex != "") result["sex"] = this.sex
         if(this.about != "") result["about"] = this.about
+        if(this.avatarUri != DEFAULT_AVATAR_URI) result["avatarUri"] = this.avatarUri
         return result
     }
 }
