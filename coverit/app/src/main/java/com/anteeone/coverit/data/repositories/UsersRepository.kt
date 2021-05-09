@@ -10,12 +10,13 @@ import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 import kotlin.IllegalStateException
+import kotlin.coroutines.resume
 
 
 class UsersRepository @Inject constructor(
     private val firebaseDatabase: FirebaseFirestore,
     private val firebaseAuth: FirebaseAuth
-): IUsersRepository {
+) : IUsersRepository {
 
     private val usersCollection = firebaseDatabase.collection("users")
 
@@ -28,8 +29,7 @@ class UsersRepository @Inject constructor(
             }.addOnFailureListener {
                 cor.resumeWith(Result.failure(IllegalStateException("Getting users error")))
             }
-        }
-        catch (ex:Exception){
+        } catch (ex: Exception) {
             cor.resumeWith(Result.failure(IllegalStateException("Getting users error")))
         }
     }
@@ -40,88 +40,108 @@ class UsersRepository @Inject constructor(
             potentialUsers.get().addOnSuccessListener {
                 it.toObjects(User::class.java).let { users ->
                     try {
-                        val currentUser = users.filter {user -> user.id == firebaseAuth.uid }[0]
-                        val exceptList:List<String> = currentUser.likes + currentUser.dislikes
+                        val currentUser = users.filter { user -> user.id == firebaseAuth.uid }[0]
+                        val exceptList: List<String> = currentUser.likes + currentUser.dislikes
                         val potentialUsersList = users
-                            .filter { user -> user.id != firebaseAuth.currentUser.uid  }
+                            .filter { user -> user.id != firebaseAuth.currentUser.uid }
                             .filter { user -> !exceptList.contains(user.id) }
                         cor.resumeWith(Result.success(potentialUsersList))
-                    }
-                    catch (ex:Exception){
+                    } catch (ex: Exception) {
                         cor.resumeWith(Result.failure(IllegalStateException("Getting users error")))
                     }
                 }
             }.addOnFailureListener {
                 cor.resumeWith(Result.failure(IllegalStateException("Getting users error")))
             }
-        }
-        catch (ex:Exception){
+        } catch (ex: Exception) {
             cor.resumeWith(Result.failure(IllegalStateException("Getting users error")))
         }
     }
 
-    override suspend fun addUser(user: User):User = suspendCancellableCoroutine {cor ->
+    override suspend fun getAllMatchingUsers(): List<User> = suspendCancellableCoroutine { cor ->
+        try {
+            usersCollection.get().addOnSuccessListener {
+                it.toObjects(User::class.java).let { users ->
+                    try {
+                        val currentUserId = firebaseAuth.currentUser.uid
+                        val currentUser = users.filter { user -> user.id == currentUserId }[0]
+                        val potentialUsersList = users
+                            .filter { user -> user.id != currentUserId }
+                            .filter { user -> user.likes.contains(currentUserId) }
+                            .filter { user -> currentUser.likes.contains(user.id) }
+                        cor.resumeWith(Result.success(potentialUsersList))
+                    } catch (ex: Exception) {
+                        cor.resumeWith(Result.failure(IllegalStateException("Getting users error")))
+                    }
+                }
+            }.addOnFailureListener {
+                cor.resumeWith(Result.failure(IllegalStateException("Getting users error")))
+            }
+        } catch (ex: Exception) {
+            cor.resumeWith(Result.failure(IllegalStateException("Getting users error")))
+        }
+    }
+
+    override suspend fun addUser(user: User): User = suspendCancellableCoroutine { cor ->
         try {
             usersCollection.document(user.id).set(user.toMap()).addOnSuccessListener {
                 cor.resumeWith(Result.success(user))
-            }.addOnFailureListener{
+            }.addOnFailureListener {
                 cor.resumeWith(Result.failure(IllegalStateException("Adding user error")))
             }
-        }
-        catch (ex:Exception){
+        } catch (ex: Exception) {
             cor.resumeWith(Result.failure(ex))
         }
     }
 
-    override suspend fun updateCurrentUser(user: User): Unit = suspendCancellableCoroutine{ cor ->
-       try {
-           usersCollection.document(firebaseAuth.uid!!).set(user.toMapForUpdate(), SetOptions.merge()).addOnSuccessListener {
-               cor.resumeWith(Result.success(Unit))
-           }.addOnFailureListener {
-               cor.resumeWith(Result.failure(IllegalStateException("Updating current user error")))
-           }
-       }
-       catch (ex: Exception){
-           cor.resumeWith(Result.failure(ex))
-       }
+    override suspend fun updateCurrentUser(user: User): Unit = suspendCancellableCoroutine { cor ->
+        try {
+            usersCollection.document(firebaseAuth.uid!!)
+                .set(user.toMapForUpdate(), SetOptions.merge()).addOnSuccessListener {
+                    cor.resumeWith(Result.success(Unit))
+                }.addOnFailureListener {
+                    cor.resumeWith(Result.failure(IllegalStateException("Updating current user error")))
+                }
+        } catch (ex: Exception) {
+            cor.resumeWith(Result.failure(ex))
+        }
     }
 
-    override suspend fun getCurrentUser(): User = suspendCancellableCoroutine{ cor ->
+    override suspend fun getCurrentUser(): User = suspendCancellableCoroutine { cor ->
         try {
             usersCollection.document(firebaseAuth.uid!!).get().addOnSuccessListener {
                 val currentUser = it.toObject(User::class.java)!!
                 cor.resumeWith(Result.success(currentUser))
-            }.addOnFailureListener{
+            }.addOnFailureListener {
                 cor.resumeWith(Result.failure(IllegalStateException("Getting current user error")))
             }
-        }
-        catch (ex: Exception){
+        } catch (ex: Exception) {
             cor.resumeWith(Result.failure(ex))
         }
     }
 
-    override suspend fun likeUser(userId: String):Unit = suspendCancellableCoroutine { cor ->
+    override suspend fun likeUser(userId: String): Unit = suspendCancellableCoroutine { cor ->
         try {
-            usersCollection.document(firebaseAuth.uid!!).update("likes",FieldValue.arrayUnion(userId)).addOnSuccessListener {
-                cor.resumeWith(Result.success(Unit))
-            }.addOnFailureListener{
-                cor.resumeWith(Result.failure(IllegalStateException("Liking user error")))
-            }
-        }
-        catch (ex: Exception){
+            usersCollection.document(firebaseAuth.uid!!)
+                .update("likes", FieldValue.arrayUnion(userId)).addOnSuccessListener {
+                    cor.resumeWith(Result.success(Unit))
+                }.addOnFailureListener {
+                    cor.resumeWith(Result.failure(IllegalStateException("Liking user error")))
+                }
+        } catch (ex: Exception) {
             cor.resumeWith(Result.failure(ex))
         }
     }
 
-    override suspend fun dislikeUser(userId: String):Unit = suspendCancellableCoroutine { cor ->
+    override suspend fun dislikeUser(userId: String): Unit = suspendCancellableCoroutine { cor ->
         try {
-            usersCollection.document(firebaseAuth.uid!!).update("dislikes",FieldValue.arrayUnion(userId)).addOnSuccessListener {
-                cor.resumeWith(Result.success(Unit))
-            }.addOnFailureListener{
-                cor.resumeWith(Result.failure(IllegalStateException("Disliking user error")))
-            }
-        }
-        catch (ex: Exception){
+            usersCollection.document(firebaseAuth.uid!!)
+                .update("dislikes", FieldValue.arrayUnion(userId)).addOnSuccessListener {
+                    cor.resumeWith(Result.success(Unit))
+                }.addOnFailureListener {
+                    cor.resumeWith(Result.failure(IllegalStateException("Disliking user error")))
+                }
+        } catch (ex: Exception) {
             cor.resumeWith(Result.failure(ex))
         }
     }

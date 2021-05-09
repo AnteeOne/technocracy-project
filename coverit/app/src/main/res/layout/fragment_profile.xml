@@ -36,7 +36,7 @@
         app:layout_constraintGuide_begin="88dp" />
 
     <ImageView
-        android:id="@+id/fr_user_btn_back"
+        android:id="@+id/fr_profile_btn_change"
         android:layout_width="@dimen/imageButtonSize"
         android:layout_height="@dimen/imageButtonSize"
         android:src="@drawable/profile_settings"
@@ -77,7 +77,7 @@
             android:layout_height="match_parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/fr_user_avatar"
+                android:id="@+id/fr_profile_avatar"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_marginTop="28dp"
@@ -89,44 +89,47 @@
 
             <TextView
                 android:id="@+id/fr_profile_text_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/comfortaa_bold"
                 android:text="@string/name"
+                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="@+id/fr_user_avatar"
-                app:layout_constraintHorizontal_bias="0.187"
-                app:layout_constraintStart_toStartOf="@+id/fr_user_avatar"
-                app:layout_constraintTop_toBottomOf="@+id/fr_user_avatar" />
+                android:textSize="28sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fr_profile_avatar" />
 
             <TextView
                 android:id="@+id/fr_profile_text_role"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="40dp"
                 android:fontFamily="@font/comfortaa_bold"
                 android:text="@string/role"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/fr_user_avatar"
-                app:layout_constraintHorizontal_bias="0.505"
-                app:layout_constraintStart_toStartOf="@+id/fr_user_avatar"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/fr_profile_avatar"
+                app:layout_constraintStart_toStartOf="@+id/fr_profile_avatar"
                 app:layout_constraintTop_toBottomOf="@+id/fr_profile_text_name" />
 
             <TextView
                 android:id="@+id/fr_profile_text_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginBottom="11dp"
                 android:fontFamily="@font/comfortaa_bold"
                 android:text="@string/age"
                 android:textColor="@color/gray"
-                app:layout_constraintBottom_toBottomOf="@+id/fr_profile_text_name"
-                app:layout_constraintStart_toEndOf="@+id/fr_profile_text_name"
-                app:layout_constraintTop_toTopOf="@+id/fr_profile_text_name"
-                app:layout_constraintVertical_bias="0.6" />
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/fr_profile_text_role"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fr_profile_text_name"
+                app:layout_constraintVertical_bias="0.0" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
@@ -145,7 +148,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="260dp">
 
 
                     <TextView
@@ -162,7 +165,6 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ScrollView
-                        android:id="@+id/fr_profile_text_about"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -171,7 +173,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
                         <TextView
-                            android:id="@+id/textView8"
+                            android:id="@+id/fr_profile_text_about"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"

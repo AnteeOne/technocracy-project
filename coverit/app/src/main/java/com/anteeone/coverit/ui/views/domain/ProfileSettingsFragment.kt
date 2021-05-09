@@ -59,7 +59,6 @@ class ProfileSettingsFragment : BaseFragment() {
         return view
     }
 
-
     override fun insertDependencies() {
         appComponent.inject(this)
     }
@@ -127,18 +126,16 @@ class ProfileSettingsFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        captureImage(requestCode,resultCode,data)
+        captureImage(requestCode, resultCode, data)
     }
 
     private fun handleUserState(state: ProfileSettingsViewModel.UserDataState) {
         when (state) {
             is ProfileSettingsViewModel.UserDataState.Empty -> {
                 viewModel.loadData()
-                _log("UserDataState: Empty")
             }
             is ProfileSettingsViewModel.UserDataState.Failed -> {
                 //todo:handle this
-                _log("UserDataState: Failed")
             }
             is ProfileSettingsViewModel.UserDataState.Success -> {
                 mNameEditText.setText(state.user.name)
@@ -147,7 +144,6 @@ class ProfileSettingsFragment : BaseFragment() {
                 mRoleEditText.setText(state.user.role)
                 mAboutEditText.setText(state.user.about)
                 mAvatar.loadImage(state.user.avatarUri)
-                _log("UserDataState: Success")
             }
         }
     }
@@ -156,14 +152,11 @@ class ProfileSettingsFragment : BaseFragment() {
         when (state) {
             is ProfileSettingsViewModel.UserUpdatingState.Empty -> {
                 //todo:handle this
-                _log("UserUpdatingState: Empty")
             }
             is ProfileSettingsViewModel.UserUpdatingState.Failed -> {
                 //todo:handle this
-                _log("UserUpdatingState: Failed")
             }
             is ProfileSettingsViewModel.UserUpdatingState.Success -> {
-                _log("UserUpdatingState: Success")
                 viewModel.userStateLiveData.postValue(ProfileSettingsViewModel.UserDataState.Empty)
                 viewModel.userUpdatingStateLiveData.postValue(ProfileSettingsViewModel.UserUpdatingState.Empty)
                 navController.navigate(R.id.action_profileSettingsFragment_to_profileFragment)
@@ -173,11 +166,11 @@ class ProfileSettingsFragment : BaseFragment() {
 
     private fun captureImage(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK && requestCode == 1000) {
-            val uri:Uri = data?.data as Uri
-            var bitmapImage: Bitmap = if(Build.VERSION.SDK_INT < 28){
-                MediaStore.Images.Media.getBitmap(requireActivity().contentResolver,uri)
-            } else{
-                val source = ImageDecoder.createSource(requireActivity().contentResolver,uri)
+            val uri: Uri = data?.data as Uri
+            var bitmapImage: Bitmap = if (Build.VERSION.SDK_INT < 28) {
+                MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
+            } else {
+                val source = ImageDecoder.createSource(requireActivity().contentResolver, uri)
                 ImageDecoder.decodeBitmap(source)
             }
             viewModel.saveImage(bitmapImage)

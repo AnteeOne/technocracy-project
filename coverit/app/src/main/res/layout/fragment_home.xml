@@ -54,7 +54,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline14" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/fr_home_btn_charts"
         android:layout_width="@dimen/imageButtonSize"
         android:layout_height="@dimen/imageButtonSize"
         android:src="@drawable/star"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline14" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/fr_home_btn_matches"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/matches"

@@ -41,4 +41,13 @@ class AuthRepository(private val firebaseAuth: FirebaseAuth): IAuthRepository {
             return firebaseUser
         }
 
+    override suspend fun logout(): Unit = suspendCancellableCoroutine {cor ->
+        try{
+            firebaseAuth.signOut()
+            cor.resumeWith(Result.success(Unit))
+        }
+        catch (ex: Exception){
+            cor.resumeWith(Result.failure(IllegalStateException("Sign out error")))
+        }
+    }
 }

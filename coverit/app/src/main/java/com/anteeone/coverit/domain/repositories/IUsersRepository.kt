@@ -9,6 +9,8 @@ interface IUsersRepository {
 
     suspend fun getAllPotentialUsers():List<User>
 
+    suspend fun getAllMatchingUsers(): List<User>
+
     suspend fun addUser(user: User): User
 
     suspend fun updateCurrentUser(user: User)

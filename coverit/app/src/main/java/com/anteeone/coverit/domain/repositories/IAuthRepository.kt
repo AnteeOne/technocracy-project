@@ -10,4 +10,6 @@ interface IAuthRepository {
 
     fun getCurrentUser(): FirebaseUser?
 
+    suspend fun logout(): Unit
+
 }
