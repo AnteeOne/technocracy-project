@@ -8,6 +8,7 @@ import com.anteeone.coverit.domain.usecases.domain.DislikeUserUsecase
 import com.anteeone.coverit.domain.usecases.domain.GetPotentialUsersUsecase
 import com.anteeone.coverit.domain.usecases.domain.LikeUserUsecase
 import com.anteeone.coverit.domain.utils.Outcome
+import com.anteeone.coverit.ui.utils.extensions._log
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
@@ -38,7 +39,9 @@ class HomeViewModel @Inject constructor(
         likeUserUsecase.invoke(viewModelScope,LikeUserUsecase.Params(users.value!![0].id)){
             when(it){
                 is Outcome.Success -> {
+                    _log("deleting user...")
                     users.value!!.removeAt(0)
+                    _log("actual size: ${users.value!!.size}")
                 }
                 is Outcome.Failure -> {
                     it.exception.printStackTrace()
@@ -52,7 +55,9 @@ class HomeViewModel @Inject constructor(
         dislikeUserUsecase.invoke(viewModelScope,DislikeUserUsecase.Params(users.value!![0].id)){
             when(it){
                 is Outcome.Success -> {
+                    _log("deleting user...")
                     users.value!!.removeAt(0)
+                    _log("actual size: ${users.value!!.size}")
                 }
                 is Outcome.Failure -> {
                     it.exception.printStackTrace()

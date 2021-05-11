@@ -8,7 +8,7 @@
     android:background="@color/transparent">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/item_charts_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -24,18 +24,18 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/item_charts_artist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textColor="@color/gray"
         android:text="@string/dartist"
         android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintStart_toStartOf="@+id/item_charts_title"
+        app:layout_constraintTop_toBottomOf="@+id/item_charts_title" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/item_charts_playcount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

@@ -10,17 +10,19 @@ import com.anteeone.coverit.R
 import com.anteeone.coverit.domain.models.User
 import com.anteeone.coverit.ui.utils.extensions.loadImage
 
-class MatchesAdapter(val onClick: (user: User) -> Unit): RecyclerView.Adapter<MatchesAdapter.MatchesViewHolder>() {
+class MatchesAdapter(val onClick: (user: User) -> Unit) :
+    RecyclerView.Adapter<MatchesAdapter.MatchesViewHolder>() {
 
     private var userList: List<User> = emptyList()
 
-    class MatchesViewHolder(itemView: View,val onClick: (user: User) -> Unit): RecyclerView.ViewHolder(itemView) {
+    class MatchesViewHolder(itemView: View, val onClick: (user: User) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
 
         private val mAvatar: ImageView = itemView.findViewById(R.id.item_matches_avatar)
         private val mName: TextView = itemView.findViewById(R.id.item_matches_name)
         private val mRole: TextView = itemView.findViewById(R.id.item_matches_role)
 
-        fun bind(user: User){
+        fun bind(user: User) {
             mAvatar.loadImage(user.avatarUri)
             mName.text = user.name
             mRole.text = user.role
@@ -32,9 +34,11 @@ class MatchesAdapter(val onClick: (user: User) -> Unit): RecyclerView.Adapter<Ma
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchesViewHolder {
-        return MatchesViewHolder(LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.matches_list_item,parent,false),onClick)
+        return MatchesViewHolder(
+            LayoutInflater
+                .from(parent.context)
+                .inflate(R.layout.matches_list_item, parent, false), onClick
+        )
     }
 
     override fun onBindViewHolder(holder: MatchesViewHolder, position: Int) {
@@ -45,7 +49,7 @@ class MatchesAdapter(val onClick: (user: User) -> Unit): RecyclerView.Adapter<Ma
         return userList.size
     }
 
-    fun setUsers(users: List<User>){
+    fun setUsers(users: List<User>) {
         this.userList = users
         notifyDataSetChanged()
     }

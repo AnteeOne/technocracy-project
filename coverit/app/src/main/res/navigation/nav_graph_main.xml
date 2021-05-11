@@ -24,7 +24,9 @@
             app:destination="@id/matchesFragment" />
         <action
             android:id="@+id/action_homeFragment_to_userFragment"
-            app:destination="@id/userFragment" />
+            app:destination="@id/userFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -93,7 +95,8 @@
             app:destination="@id/matchesFragment" />
         <action
             android:id="@+id/action_userFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@android:anim/fade_out" />
         <argument
             android:name="user"
             app:argType="com.anteeone.coverit.domain.models.User" />

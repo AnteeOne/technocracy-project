@@ -9,8 +9,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anteeone.coverit.R
 import com.anteeone.coverit.domain.models.User
+import com.anteeone.coverit.ui.utils.extensions._log
 import com.anteeone.coverit.ui.utils.extensions.insertViewModel
 import com.anteeone.coverit.ui.utils.extensions.loadImage
 import com.anteeone.coverit.ui.viewmodels.domain.ProfileViewModel
@@ -28,11 +30,13 @@ class ProfileFragment : BaseFragment() {
     private lateinit var mRole: TextView
     private lateinit var mAbout: TextView
     private lateinit var mVideoButton: Button
+    private lateinit var mSwipeRefresh: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         insertDependencies()
         initViewModel()
+        _log("Profile fragment has been created!")
     }
 
     override fun onCreateView(
@@ -59,6 +63,7 @@ class ProfileFragment : BaseFragment() {
         mRole = view.findViewById(R.id.fr_profile_text_role)
         mAbout = view.findViewById(R.id.fr_profile_text_about)
         mVideoButton = view.findViewById(R.id.fr_profile_btn_video)
+        mSwipeRefresh = view.findViewById(R.id.srl_profile)
     }
 
     override fun initListeners() {
@@ -70,6 +75,9 @@ class ProfileFragment : BaseFragment() {
             val logoutIntent = Intent(context,AuthActivity::class.java)
             activity?.finish()
             startActivity(logoutIntent)
+        }
+        mSwipeRefresh.setOnRefreshListener {
+            viewModel.loadUser()
         }
     }
 
@@ -90,6 +98,7 @@ class ProfileFragment : BaseFragment() {
                 is ProfileViewModel.UserState.Success -> {
                     val user = it.data.data
                     setUser(user)
+                    mSwipeRefresh.isRefreshing = false
                 }
             }
         }
