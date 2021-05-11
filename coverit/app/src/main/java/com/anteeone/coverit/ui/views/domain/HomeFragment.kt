@@ -21,14 +21,11 @@ class HomeFragment : BaseFragment(), CardStackListener {
 
     private lateinit var viewModel: HomeViewModel;
 
-
     private lateinit var mMatchesButton: ImageView
     private lateinit var mChartsButton: ImageView
     private lateinit var mCardStackView: CardStackView
-    private val mAdapter = UsersAdapter{
-        val action = HomeFragmentDirections.actionHomeFragmentToUserFragment(it)
-        navController.navigate(action)
-    }
+
+    private lateinit var  mAdapter: UsersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +54,10 @@ class HomeFragment : BaseFragment(), CardStackListener {
         mCardStackView = view.findViewById(R.id.fr_home_fling_container)
         mMatchesButton = view.findViewById(R.id.fr_home_btn_matches)
         mChartsButton = view.findViewById(R.id.fr_home_btn_charts)
+        mAdapter = UsersAdapter{
+            val action = HomeFragmentDirections.actionHomeFragmentToUserFragment(it)
+            navController.navigate(action)
+        }
         mCardStackView.also {
             it.adapter = mAdapter
             it.layoutManager = CardStackLayoutManager(context, this).also {

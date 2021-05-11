@@ -63,6 +63,14 @@
             app:layout_constraintStart_toStartOf="@+id/guideline122"
             app:layout_constraintTop_toTopOf="@+id/guideline142" />
 
+        <ImageView
+            android:id="@+id/fr_charts_btn_back"
+            style="@style/imageNavButton"
+            app:layout_constraintBottom_toTopOf="@+id/guideline152"
+            app:layout_constraintStart_toStartOf="@+id/guideline122"
+            app:layout_constraintTop_toTopOf="@+id/guideline142"
+            app:srcCompat="@drawable/arrow_back" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

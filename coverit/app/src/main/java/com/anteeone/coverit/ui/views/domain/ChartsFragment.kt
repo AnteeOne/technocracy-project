@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -21,6 +22,7 @@ class ChartsFragment : BaseFragment() {
     private lateinit var viewModel: ChartsViewModel
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mSwipeRefresh: SwipeRefreshLayout
+    private lateinit var mBackButton: ImageView
     private lateinit var mAdapter: ChartsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,7 @@ class ChartsFragment : BaseFragment() {
     override fun initMembers(view: View) {
         mSwipeRefresh = view.findViewById(R.id.srl_charts)
         mRecyclerView = view.findViewById(R.id.rv_charts)
+        mBackButton = view.findViewById(R.id.fr_charts_btn_back)
         mAdapter = ChartsAdapter {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it.url)))
         }.also { mRecyclerView.adapter = it }
@@ -55,6 +58,9 @@ class ChartsFragment : BaseFragment() {
     override fun initListeners() {
         mSwipeRefresh.setOnRefreshListener {
             viewModel.loadTracks()
+        }
+        mBackButton.setOnClickListener {
+            navController.popBackStack()
         }
     }
 

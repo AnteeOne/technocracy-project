@@ -17,4 +17,10 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="imageNavButton">
+        <item name="android:layout_width">@dimen/imageButtonSize</item>
+        <item name="android:layout_height">@dimen/imageButtonSize</item>
+        <item name="android:background">@drawable/custom_imageview_button</item>
+    </style>
 </resources>
