@@ -43,7 +43,6 @@ class ProfileSettingsFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         insertDependencies()
-        initViewModel()
         _log("ProfileSettingsFragment has been created!")
     }
 
@@ -53,6 +52,7 @@ class ProfileSettingsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile_settings, container, false)
+        initViewModel()
         initMembers(view)
         initNavigation()
         initListeners()
@@ -91,7 +91,6 @@ class ProfileSettingsFragment : BaseFragment() {
                     )
                 )
             } catch (ex: Exception) { //todo:recode this :c
-                ex.printStackTrace()
                 viewModel.saveData(
                     User(
                         name = mNameEditText.text.toString(),
@@ -117,10 +116,10 @@ class ProfileSettingsFragment : BaseFragment() {
 
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
-        viewModel.userStateLiveData.observe(this) {
+        viewModel.userStateLiveData.observe(viewLifecycleOwner) {
             handleUserState(it)
         }
-        viewModel.userUpdatingStateLiveData.observe(this) {
+        viewModel.userUpdatingStateLiveData.observe(viewLifecycleOwner) {
             handleUserUpdatingState(it)
         }
     }

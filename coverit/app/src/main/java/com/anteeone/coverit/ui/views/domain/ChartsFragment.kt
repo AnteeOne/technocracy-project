@@ -28,7 +28,6 @@ class ChartsFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         insertDependencies()
-        initViewModel()
     }
 
     override fun onCreateView(
@@ -36,6 +35,7 @@ class ChartsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_charts, container, false)
+        initViewModel()
         initMembers(view)
         initNavigation()
         initListeners()
@@ -70,7 +70,7 @@ class ChartsFragment : BaseFragment() {
 
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
-        viewModel.tracks.observe(this) {
+        viewModel.tracks.observe(viewLifecycleOwner) {
             if (it.forSubscribers) when (it.data) {
                 is ChartsViewModel.TracksState.Empty -> {
                     viewModel.loadTracks()

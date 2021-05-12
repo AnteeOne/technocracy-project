@@ -30,8 +30,6 @@ class HomeFragment : BaseFragment(), CardStackListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         insertDependencies()
-        initViewModel()
-        viewModel.loadUsersList()
         Log.println(Log.INFO, "coverit-tag", "HomeFragment has been created")
     }
 
@@ -40,6 +38,7 @@ class HomeFragment : BaseFragment(), CardStackListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+        initViewModel()
         initMembers(view)
         initNavigation()
         initListeners()
@@ -82,7 +81,7 @@ class HomeFragment : BaseFragment(), CardStackListener {
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
 
-        viewModel.users.observe(this) { users ->
+        viewModel.users.observe(viewLifecycleOwner) { users ->
             if (users.isNotEmpty()) {
                 Log.println(Log.INFO, "coverit-tag", "${users.size} new users have been loaded!")
                 mAdapter.setUsers(users)

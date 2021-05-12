@@ -35,7 +35,6 @@ class ProfileFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         insertDependencies()
-        initViewModel()
         _log("Profile fragment has been created!")
     }
 
@@ -44,6 +43,7 @@ class ProfileFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        initViewModel()
         initMembers(view)
         initNavigation()
         initListeners()
@@ -87,7 +87,7 @@ class ProfileFragment : BaseFragment() {
 
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
-        viewModel.userState.observe(this){
+        viewModel.userState.observe(viewLifecycleOwner){
             if(it.forSubscribers) when(it.data){
                 is ProfileViewModel.UserState.Empty -> {
                     viewModel.loadUser()

@@ -33,7 +33,6 @@ class MatchesFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         insertDependencies()
-        initViewModel()
         _log("Matches Fragment has been created!")
     }
 
@@ -42,6 +41,7 @@ class MatchesFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_matches, container, false)
+        initViewModel()
         initMembers(view)
         initNavigation()
         initListeners()
@@ -70,7 +70,7 @@ class MatchesFragment : BaseFragment() {
 
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
-        viewModel.users.observe(this) {
+        viewModel.users.observe(viewLifecycleOwner) {
             if (it.forSubscribers) when (it.value()) {
                 is MatchesViewModel.UsersState.Empty -> {
                     _log("MatchesFr: Empty")

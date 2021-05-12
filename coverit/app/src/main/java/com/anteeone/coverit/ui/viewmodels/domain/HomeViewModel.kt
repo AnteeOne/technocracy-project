@@ -18,9 +18,14 @@ class HomeViewModel @Inject constructor(
 ): ViewModel() {
 
     var users:MutableLiveData<MutableList<User>> =
-        MutableLiveData(mutableListOf())
+        MutableLiveData()
+
+    init {
+        loadUsersList()
+    }
 
     fun loadUsersList(){
+        _log("taking users from internet...")
         getPotentialUsersUsecase.invoke(viewModelScope,
             GetPotentialUsersUsecase.Params(Unit)){
             when(it){
