@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.anteeone.coverit.R
 import com.anteeone.coverit.ui.adapters.UsersAdapter
 import com.anteeone.coverit.ui.utils.extensions.insertViewModel
+import com.anteeone.coverit.ui.utils.models.Container
 import com.anteeone.coverit.ui.viewmodels.domain.HomeViewModel
 import com.anteeone.coverit.ui.views.BaseFragment
 import com.yuyakaido.android.cardstackview.*
@@ -24,8 +26,9 @@ class HomeFragment : BaseFragment(), CardStackListener {
     private lateinit var mMatchesButton: ImageView
     private lateinit var mChartsButton: ImageView
     private lateinit var mCardStackView: CardStackView
+    private lateinit var mProgressBar: ProgressBar
 
-    private lateinit var  mAdapter: UsersAdapter
+    private lateinit var mAdapter: UsersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +66,7 @@ class HomeFragment : BaseFragment(), CardStackListener {
                 it.setStackFrom(StackFrom.Top)
             }
         }
+        mProgressBar = view.findViewById(R.id.pb_home)
     }
 
     override fun initListeners() {
@@ -83,10 +87,21 @@ class HomeFragment : BaseFragment(), CardStackListener {
 
         viewModel.users.observe(viewLifecycleOwner) { users ->
             if (users.isNotEmpty()) {
+                mProgressBar.visibility = ProgressBar.INVISIBLE
                 Log.println(Log.INFO, "coverit-tag", "${users.size} new users have been loaded!")
                 mAdapter.setUsers(users)
             }
+        }
 
+        viewModel.matchedUserState.observe(viewLifecycleOwner) {
+            if(it.forSubscribers) when(it.data) {
+                is HomeViewModel.MatchedUserState.Empty -> {}
+                is HomeViewModel.MatchedUserState.Failure -> {}
+                is HomeViewModel.MatchedUserState.Success -> {
+                    viewModel.matchedUserState.postValue(HomeViewModel.MatchedUserState.Empty.pack(false))
+                    navController.navigate(R.id.action_homeFragment_to_fragment_match)
+                }
+            }
         }
     }
 

@@ -12,6 +12,17 @@
         android:background="@drawable/gradient_home"
         tools:context=".ui.views.domain.ProfileSettingsFragment">
 
+        <ProgressBar
+            android:id="@+id/pb_profile_settings"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fr_profile_settings_avatar"
             android:layout_width="164dp"

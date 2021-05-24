@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -31,6 +32,7 @@ class ProfileFragment : BaseFragment() {
     private lateinit var mAbout: TextView
     private lateinit var mVideoButton: Button
     private lateinit var mSwipeRefresh: SwipeRefreshLayout
+    private lateinit var mProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +66,7 @@ class ProfileFragment : BaseFragment() {
         mAbout = view.findViewById(R.id.fr_profile_text_about)
         mVideoButton = view.findViewById(R.id.fr_profile_btn_video)
         mSwipeRefresh = view.findViewById(R.id.srl_profile)
+        mProgressBar = view.findViewById(R.id.pb_profile)
     }
 
     override fun initListeners() {
@@ -88,17 +91,20 @@ class ProfileFragment : BaseFragment() {
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
         viewModel.userState.observe(viewLifecycleOwner){
-            if(it.forSubscribers) when(it.data){
-                is ProfileViewModel.UserState.Empty -> {
-                    viewModel.loadUser()
-                }
-                is ProfileViewModel.UserState.Failure -> {
-                    viewModel.userState.postValue(ProfileViewModel.UserState.Empty.pack(false))
-                }
-                is ProfileViewModel.UserState.Success -> {
-                    val user = it.data.data
-                    setUser(user)
-                    mSwipeRefresh.isRefreshing = false
+            if(it.forSubscribers) {
+                mProgressBar.visibility = ProgressBar.INVISIBLE
+                when (it.data) {
+                    is ProfileViewModel.UserState.Empty -> {
+                        viewModel.loadUser()
+                    }
+                    is ProfileViewModel.UserState.Failure -> {
+                        viewModel.userState.postValue(ProfileViewModel.UserState.Empty.pack(false))
+                    }
+                    is ProfileViewModel.UserState.Success -> {
+                        val user = it.data.data
+                        setUser(user)
+                        mSwipeRefresh.isRefreshing = false
+                    }
                 }
             }
         }

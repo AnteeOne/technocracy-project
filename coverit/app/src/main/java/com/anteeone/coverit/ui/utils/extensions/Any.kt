@@ -1,6 +1,7 @@
 package com.anteeone.coverit.ui.utils.extensions
 
 import android.util.Log
+import com.anteeone.coverit.ui.utils.models.Container
 
 private val APP_TAG = "coverit-tag"
 

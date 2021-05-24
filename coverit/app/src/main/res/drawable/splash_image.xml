@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/splash_gradient"/>
-    <item android:drawable="@drawable/antee_logo_white"
+    <item android:drawable="@drawable/splash_gradient_poison"/>
+    <item android:drawable="@drawable/antee_logo"
           android:gravity="center"
           android:height="480dp"
           android:width="480dp"

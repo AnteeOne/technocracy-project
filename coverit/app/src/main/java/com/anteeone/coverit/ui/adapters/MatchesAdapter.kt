@@ -49,8 +49,9 @@ class MatchesAdapter(val onClick: (user: User) -> Unit) :
         return userList.size
     }
 
-    fun setUsers(users: List<User>) {
+    fun setUsers(users: List<User>, onFinish: () -> Unit) {
         this.userList = users
         notifyDataSetChanged()
+        onFinish()
     }
 }

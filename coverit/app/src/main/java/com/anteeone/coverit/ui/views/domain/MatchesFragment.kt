@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anteeone.coverit.R
 import com.anteeone.coverit.ui.adapters.MatchesAdapter
 import com.anteeone.coverit.ui.adapters.UsersAdapter
@@ -24,6 +26,8 @@ class MatchesFragment : BaseFragment() {
 
     private lateinit var mMatchesList: RecyclerView
     private lateinit var mBackButton: ImageView
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var mProgressBar: ProgressBar
 
     private val mAdapter = MatchesAdapter{
         val action = MatchesFragmentDirections.actionMatchesFragmentToUserFragment(it)
@@ -56,11 +60,16 @@ class MatchesFragment : BaseFragment() {
         mMatchesList = view.findViewById(R.id.rv_matches)
         mMatchesList.adapter = mAdapter
         mBackButton = view.findViewById(R.id.fr_matches_btn_back)
+        mSwipeRefreshLayout = view.findViewById(R.id.srl_matches)
+        mProgressBar = view.findViewById(R.id.pb_matches)
     }
 
     override fun initListeners() {
         mBackButton.setOnClickListener {
             navController.popBackStack()
+        }
+        mSwipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadUsers()
         }
     }
 
@@ -71,22 +80,29 @@ class MatchesFragment : BaseFragment() {
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
         viewModel.users.observe(viewLifecycleOwner) {
-            if (it.forSubscribers) when (it.value()) {
-                is MatchesViewModel.UsersState.Empty -> {
-                    _log("MatchesFr: Empty")
-                    viewModel.loadUsers()
-                }
-                is MatchesViewModel.UsersState.Failure -> {
-                    //todo: handle this
-                    viewModel.users.value = MatchesViewModel.UsersState.Empty.pack(false)
-                    _log("MatchesFr: Failure")
-                }
-                is MatchesViewModel.UsersState.Success -> {
-                    val users = ((it.data) as MatchesViewModel.UsersState.Success).data
-                    mAdapter.setUsers(users)
-                    _log("MatchesFr: Success[+${users.size} users]")
+            if (it.forSubscribers) {
+                mSwipeRefreshLayout.isRefreshing = false
+                when (it.value()) {
+                    is MatchesViewModel.UsersState.Empty -> {
+                        viewModel.loadUsers()
+                    }
+                    is MatchesViewModel.UsersState.Failure -> {
+                        //todo: handle this
+                        viewModel.users.value = MatchesViewModel.UsersState.Empty.pack(false)
+                    }
+                    is MatchesViewModel.UsersState.Success -> {
+                        val users = ((it.data) as MatchesViewModel.UsersState.Success).data
+                        mAdapter.setUsers(users){
+                            mProgressBar.visibility = ProgressBar.INVISIBLE
+                        }
+
+                    }
                 }
             }
         }
+    }
+
+    private fun hideProgress(){
+        mProgressBar.visibility = ProgressBar.INVISIBLE
     }
 }

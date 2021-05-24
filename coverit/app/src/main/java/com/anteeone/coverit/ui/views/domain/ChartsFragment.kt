@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -24,6 +25,7 @@ class ChartsFragment : BaseFragment() {
     private lateinit var mSwipeRefresh: SwipeRefreshLayout
     private lateinit var mBackButton: ImageView
     private lateinit var mAdapter: ChartsAdapter
+    private lateinit var mProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,7 @@ class ChartsFragment : BaseFragment() {
 
     override fun initMembers(view: View) {
         mSwipeRefresh = view.findViewById(R.id.srl_charts)
+        mProgressBar = view.findViewById(R.id.pb_charts)
         mRecyclerView = view.findViewById(R.id.rv_charts)
         mBackButton = view.findViewById(R.id.fr_charts_btn_back)
         mAdapter = ChartsAdapter {
@@ -71,17 +74,25 @@ class ChartsFragment : BaseFragment() {
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
         viewModel.tracks.observe(viewLifecycleOwner) {
-            if (it.forSubscribers) when (it.data) {
-                is ChartsViewModel.TracksState.Empty -> {
-                    viewModel.loadTracks()
-                }
-                ChartsViewModel.TracksState.Failure -> {
-                }
-                is ChartsViewModel.TracksState.Success -> {
-                    mAdapter.setTrackModels(it.data.data)
-                    mSwipeRefresh.isRefreshing = false
+            if (it.forSubscribers) {
+                mSwipeRefresh.isRefreshing = false
+                when (it.data) {
+                    is ChartsViewModel.TracksState.Empty -> {
+                        viewModel.loadTracks()
+                    }
+                    ChartsViewModel.TracksState.Failure -> {
+                    }
+                    is ChartsViewModel.TracksState.Success -> {
+                        mAdapter.setTrackModels(it.data.data) {
+                            hideProgress()
+                        }
+                    }
                 }
             }
         }
+    }
+
+    fun hideProgress() {
+        mProgressBar.visibility = ProgressBar.INVISIBLE
     }
 }

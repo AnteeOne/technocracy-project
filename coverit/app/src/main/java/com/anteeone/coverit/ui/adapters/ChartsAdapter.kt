@@ -8,17 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anteeone.coverit.R
 import com.anteeone.coverit.domain.models.TrackModel
 
-class ChartsAdapter(val onClick: (track: TrackModel) -> Unit): RecyclerView.Adapter<ChartsAdapter.ChartsViewHolder>() {
+class ChartsAdapter(val onClick: (track: TrackModel) -> Unit) :
+    RecyclerView.Adapter<ChartsAdapter.ChartsViewHolder>() {
 
     private var trackList: List<TrackModel> = emptyList()
 
-    class ChartsViewHolder(itemView: View, val onClick: (track: TrackModel) -> Unit): RecyclerView.ViewHolder(itemView) {
+    class ChartsViewHolder(itemView: View, val onClick: (track: TrackModel) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
 
         private val mTitle: TextView = itemView.findViewById(R.id.item_charts_title)
         private val mArtist: TextView = itemView.findViewById(R.id.item_charts_artist)
         private val mPlayCount: TextView = itemView.findViewById(R.id.item_charts_playcount)
 
-        fun bind(track: TrackModel){
+        fun bind(track: TrackModel) {
             mTitle.text = track.title
             mArtist.text = track.artist
             mPlayCount.text = track.playCount
@@ -32,8 +34,9 @@ class ChartsAdapter(val onClick: (track: TrackModel) -> Unit): RecyclerView.Adap
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChartsViewHolder {
         return ChartsViewHolder(
             LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.charts_list_item,parent,false),onClick)
+                .from(parent.context)
+                .inflate(R.layout.charts_list_item, parent, false), onClick
+        )
     }
 
     override fun onBindViewHolder(holder: ChartsViewHolder, position: Int) {
@@ -44,8 +47,12 @@ class ChartsAdapter(val onClick: (track: TrackModel) -> Unit): RecyclerView.Adap
         return trackList.size
     }
 
-    fun setTrackModels(tracks: List<TrackModel>){
+    fun setTrackModels(
+        tracks: List<TrackModel>,
+        onFinish: () -> Unit
+    ) {
         this.trackList = tracks
         notifyDataSetChanged()
+        onFinish()
     }
 }
