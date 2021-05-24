@@ -120,6 +120,19 @@ class UsersRepository @Inject constructor(
         }
     }
 
+    override suspend fun getUserById(userId: String): User = suspendCancellableCoroutine { cor ->
+        try {
+            usersCollection.document(userId).get().addOnSuccessListener {
+                val currentUser = it.toObject(User::class.java)!!
+                cor.resumeWith(Result.success(currentUser))
+            }.addOnFailureListener {
+                cor.resumeWith(Result.failure(IllegalStateException("Getting user error")))
+            }
+        } catch (ex: Exception) {
+            cor.resumeWith(Result.failure(ex))
+        }
+    }
+
     override suspend fun likeUser(userId: String): Unit = suspendCancellableCoroutine { cor ->
         try {
             usersCollection.document(firebaseAuth.uid!!)

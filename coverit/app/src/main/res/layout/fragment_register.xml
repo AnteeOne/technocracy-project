@@ -106,8 +106,7 @@
 
     <ImageView
         android:id="@+id/fr_register_button_back"
-        android:layout_width="42dp"
-        android:layout_height="36dp"
+        style="@style/imageNavButton"
         android:src="@drawable/arrow_back"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />

@@ -120,3 +120,4 @@ coverit/.idea/gradle.xml
 coverit/gradlew
 coverit/gradlew.bat
 coverit/app/proguard-rules.pro
+coverit/app/src/main/java/com/anteeone/coverit/data/network/Constants.kt

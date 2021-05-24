@@ -15,8 +15,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anteeone.coverit.R
 import com.anteeone.coverit.domain.models.User
 import com.anteeone.coverit.ui.utils.extensions._log
@@ -39,11 +41,12 @@ class ProfileSettingsFragment : BaseFragment() {
     private lateinit var mRoleEditText: EditText
     private lateinit var mAboutEditText: EditText
     private lateinit var mAvatar: ImageView
+    private lateinit var mSwipeRefresh: SwipeRefreshLayout
+    private lateinit var mProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         insertDependencies()
-        initViewModel()
         _log("ProfileSettingsFragment has been created!")
     }
 
@@ -53,6 +56,7 @@ class ProfileSettingsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile_settings, container, false)
+        initViewModel()
         initMembers(view)
         initNavigation()
         initListeners()
@@ -73,6 +77,8 @@ class ProfileSettingsFragment : BaseFragment() {
         mRoleEditText = view.findViewById(R.id.fr_profile_settings_et_role)
         mAboutEditText = view.findViewById(R.id.fr_profile_settings_et_about)
         mAvatar = view.findViewById(R.id.fr_profile_settings_avatar)
+        mSwipeRefresh = view.findViewById(R.id.srl_profile_settings)
+        mProgressBar = view.findViewById(R.id.pb_profile_settings)
     }
 
     override fun initListeners() {
@@ -80,6 +86,7 @@ class ProfileSettingsFragment : BaseFragment() {
             navController.popBackStack()
         }
         mUpdateButton.setOnClickListener {
+            mProgressBar.visibility = ProgressBar.VISIBLE
             try {
                 viewModel.saveData(
                     User(
@@ -91,7 +98,6 @@ class ProfileSettingsFragment : BaseFragment() {
                     )
                 )
             } catch (ex: Exception) { //todo:recode this :c
-                ex.printStackTrace()
                 viewModel.saveData(
                     User(
                         name = mNameEditText.text.toString(),
@@ -109,6 +115,9 @@ class ProfileSettingsFragment : BaseFragment() {
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(intent, "Complete action using"), 1000)
         }
+        mSwipeRefresh.setOnRefreshListener {
+            viewModel.loadData()
+        }
     }
 
     override fun initNavigation() {
@@ -117,10 +126,10 @@ class ProfileSettingsFragment : BaseFragment() {
 
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
-        viewModel.userStateLiveData.observe(this) {
+        viewModel.userStateLiveData.observe(viewLifecycleOwner) {
             handleUserState(it)
         }
-        viewModel.userUpdatingStateLiveData.observe(this) {
+        viewModel.userUpdatingStateLiveData.observe(viewLifecycleOwner) {
             handleUserUpdatingState(it)
         }
     }
@@ -130,6 +139,7 @@ class ProfileSettingsFragment : BaseFragment() {
     }
 
     private fun handleUserState(state: ProfileSettingsViewModel.UserDataState) {
+        mProgressBar.visibility = ProgressBar.INVISIBLE
         when (state) {
             is ProfileSettingsViewModel.UserDataState.Empty -> {
                 viewModel.loadData()
@@ -138,6 +148,7 @@ class ProfileSettingsFragment : BaseFragment() {
                 //todo:handle this
             }
             is ProfileSettingsViewModel.UserDataState.Success -> {
+                mSwipeRefresh.isRefreshing = false
                 mNameEditText.setText(state.user.name)
                 mAgeEditText.setText(state.user.age.toString())
                 mSexEditText.setText(state.user.sex)
@@ -149,6 +160,7 @@ class ProfileSettingsFragment : BaseFragment() {
     }
 
     private fun handleUserUpdatingState(state: ProfileSettingsViewModel.UserUpdatingState) {
+        mProgressBar.visibility = ProgressBar.INVISIBLE
         when (state) {
             is ProfileSettingsViewModel.UserUpdatingState.Empty -> {
                 //todo:handle this

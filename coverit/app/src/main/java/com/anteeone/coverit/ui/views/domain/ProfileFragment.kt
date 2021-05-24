@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anteeone.coverit.R
 import com.anteeone.coverit.domain.models.User
+import com.anteeone.coverit.ui.utils.extensions._log
 import com.anteeone.coverit.ui.utils.extensions.insertViewModel
 import com.anteeone.coverit.ui.utils.extensions.loadImage
 import com.anteeone.coverit.ui.viewmodels.domain.ProfileViewModel
@@ -28,11 +31,13 @@ class ProfileFragment : BaseFragment() {
     private lateinit var mRole: TextView
     private lateinit var mAbout: TextView
     private lateinit var mVideoButton: Button
+    private lateinit var mSwipeRefresh: SwipeRefreshLayout
+    private lateinit var mProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         insertDependencies()
-        initViewModel()
+        _log("Profile fragment has been created!")
     }
 
     override fun onCreateView(
@@ -40,6 +45,7 @@ class ProfileFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        initViewModel()
         initMembers(view)
         initNavigation()
         initListeners()
@@ -59,6 +65,8 @@ class ProfileFragment : BaseFragment() {
         mRole = view.findViewById(R.id.fr_profile_text_role)
         mAbout = view.findViewById(R.id.fr_profile_text_about)
         mVideoButton = view.findViewById(R.id.fr_profile_btn_video)
+        mSwipeRefresh = view.findViewById(R.id.srl_profile)
+        mProgressBar = view.findViewById(R.id.pb_profile)
     }
 
     override fun initListeners() {
@@ -71,6 +79,9 @@ class ProfileFragment : BaseFragment() {
             activity?.finish()
             startActivity(logoutIntent)
         }
+        mSwipeRefresh.setOnRefreshListener {
+            viewModel.loadUser()
+        }
     }
 
     override fun initNavigation() {
@@ -79,17 +90,21 @@ class ProfileFragment : BaseFragment() {
 
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
-        viewModel.userState.observe(this){
-            if(it.forSubscribers) when(it.data){
-                is ProfileViewModel.UserState.Empty -> {
-                    viewModel.loadUser()
-                }
-                is ProfileViewModel.UserState.Failure -> {
-                    viewModel.userState.postValue(ProfileViewModel.UserState.Empty.pack(false))
-                }
-                is ProfileViewModel.UserState.Success -> {
-                    val user = it.data.data
-                    setUser(user)
+        viewModel.userState.observe(viewLifecycleOwner){
+            if(it.forSubscribers) {
+                mProgressBar.visibility = ProgressBar.INVISIBLE
+                when (it.data) {
+                    is ProfileViewModel.UserState.Empty -> {
+                        viewModel.loadUser()
+                    }
+                    is ProfileViewModel.UserState.Failure -> {
+                        viewModel.userState.postValue(ProfileViewModel.UserState.Empty.pack(false))
+                    }
+                    is ProfileViewModel.UserState.Success -> {
+                        val user = it.data.data
+                        setUser(user)
+                        mSwipeRefresh.isRefreshing = false
+                    }
                 }
             }
         }

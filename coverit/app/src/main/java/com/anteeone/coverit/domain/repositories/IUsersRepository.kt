@@ -17,6 +17,8 @@ interface IUsersRepository {
 
     suspend fun getCurrentUser(): User
 
+    suspend fun getUserById(userId: String): User
+
     suspend fun likeUser(userId: String): Unit
 
     suspend fun dislikeUser(userId: String): Unit

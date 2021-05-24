@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/transparent">
+    android:background="@drawable/custom_rv_item_background">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/item_charts_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -24,27 +24,29 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/item_charts_artist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textColor="@color/gray"
         android:text="@string/dartist"
         android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintStart_toStartOf="@+id/item_charts_title"
+        app:layout_constraintTop_toBottomOf="@+id/item_charts_title" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/item_charts_playcount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/dcount"
-        android:textSize="12sp"
         android:textColor="@color/gray"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_charts_artist"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/item_charts_artist"
+        app:layout_constraintTop_toTopOf="@+id/item_charts_artist"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
