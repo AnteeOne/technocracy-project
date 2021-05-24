@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anteeone.coverit.R
 import com.anteeone.coverit.ui.adapters.UsersAdapter
 import com.anteeone.coverit.ui.utils.extensions.insertViewModel
@@ -27,6 +28,7 @@ class HomeFragment : BaseFragment(), CardStackListener {
     private lateinit var mChartsButton: ImageView
     private lateinit var mCardStackView: CardStackView
     private lateinit var mProgressBar: ProgressBar
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
     private lateinit var mAdapter: UsersAdapter
 
@@ -67,6 +69,7 @@ class HomeFragment : BaseFragment(), CardStackListener {
             }
         }
         mProgressBar = view.findViewById(R.id.pb_home)
+        mSwipeRefreshLayout = view.findViewById(R.id.srl_home)
     }
 
     override fun initListeners() {
@@ -75,6 +78,9 @@ class HomeFragment : BaseFragment(), CardStackListener {
         }
         mChartsButton.setOnClickListener {
             navController.navigate(R.id.action_homeFragment_to_chartsFragment)
+        }
+        mSwipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadUsersList()
         }
     }
 
@@ -87,10 +93,10 @@ class HomeFragment : BaseFragment(), CardStackListener {
 
         viewModel.users.observe(viewLifecycleOwner) { users ->
             if (users.isNotEmpty()) {
-                mProgressBar.visibility = ProgressBar.INVISIBLE
-                Log.println(Log.INFO, "coverit-tag", "${users.size} new users have been loaded!")
                 mAdapter.setUsers(users)
             }
+            mProgressBar.visibility = ProgressBar.INVISIBLE
+            mSwipeRefreshLayout.isRefreshing = false
         }
 
         viewModel.matchedUserState.observe(viewLifecycleOwner) {

@@ -6,14 +6,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.anteeone.coverit.R
 import com.anteeone.coverit.domain.models.User
+import com.anteeone.coverit.ui.adapters.diffutils.UsersDiffCallback
 import com.anteeone.coverit.ui.utils.extensions.loadImage
 
 class UsersAdapter(val onClick: (user: User) -> Unit): RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
 
-    private var userList: List<User> = emptyList()
+    private var userList: MutableList<User> = mutableListOf()
 
     class UsersViewHolder(itemView: View,val onClick: (user: User) -> Unit): RecyclerView.ViewHolder(itemView){
 
@@ -46,8 +48,11 @@ class UsersAdapter(val onClick: (user: User) -> Unit): RecyclerView.Adapter<User
     }
 
     fun setUsers(users: List<User>){
-        this.userList = users
-        notifyDataSetChanged()
+        val diffCallback = UsersDiffCallback(userList,users)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        userList.clear()
+        userList.addAll(users)
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }

@@ -9,15 +9,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_home"
+        android:background="@drawable/splash_gradient_poison"
         tools:context=".ui.views.domain.HomeFragment">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/comfortaa"
+            android:gravity="center"
+            android:text="@string/thats_all"
+            android:textAlignment="center"
+            android:textColor="@color/gray"
+            android:textSize="24sp" />
 
         <com.yuyakaido.android.cardstackview.CardStackView
             android:id="@+id/fr_home_fling_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline12"
