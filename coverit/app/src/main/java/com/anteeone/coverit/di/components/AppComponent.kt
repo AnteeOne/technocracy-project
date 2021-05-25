@@ -32,6 +32,7 @@ interface AppComponent {
     fun inject(chatFragment: ChatFragment)
     fun inject(matchesFragment: MatchesFragment)
     fun inject(chartsFragment: ChartsFragment)
+    fun inject(chatDetailsFragment: ChatDetailsFragment)
 
     //todo: replace with sub-components and dagger scopes
 }
