@@ -46,15 +46,19 @@
         app:layout_constraintGuide_begin="88dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:id="@+id/rv_chat_details"
+        android:layout_width="match_parent"
+        android:layout_height="604dp"
+        android:layout_marginStart="20dp"
+        android:visibility="invisible"
+        android:layout_marginEnd="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toStartOf="@+id/guideline1330"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline1320"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline1350"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_message_another" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -98,8 +102,6 @@
 
     <ImageView
         android:id="@+id/fragment_chat_details_btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:src="@drawable/arrow_back"
         style="@style/imageNavButton"
         app:layout_constraintBottom_toTopOf="@+id/guideline1350"

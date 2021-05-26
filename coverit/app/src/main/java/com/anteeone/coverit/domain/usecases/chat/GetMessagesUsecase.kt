@@ -22,6 +22,7 @@ class GetMessagesUsecase @Inject constructor(
             )
         }
         catch (ex: Exception){
+            ex.printStackTrace()
             return Outcome.Failure(ex)
         }
     }

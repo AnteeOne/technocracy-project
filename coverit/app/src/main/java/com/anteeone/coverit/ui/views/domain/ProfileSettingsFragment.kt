@@ -16,6 +16,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -43,6 +44,7 @@ class ProfileSettingsFragment : BaseFragment() {
     private lateinit var mAvatar: ImageView
     private lateinit var mSwipeRefresh: SwipeRefreshLayout
     private lateinit var mProgressBar: ProgressBar
+    private lateinit var mContainer: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +81,7 @@ class ProfileSettingsFragment : BaseFragment() {
         mAvatar = view.findViewById(R.id.fr_profile_settings_avatar)
         mSwipeRefresh = view.findViewById(R.id.srl_profile_settings)
         mProgressBar = view.findViewById(R.id.pb_profile_settings)
+        mContainer = view.findViewById(R.id.fr_profile_settings_container)
     }
 
     override fun initListeners() {
@@ -149,6 +152,7 @@ class ProfileSettingsFragment : BaseFragment() {
             }
             is ProfileSettingsViewModel.UserDataState.Success -> {
                 mSwipeRefresh.isRefreshing = false
+                mContainer.visibility = ConstraintLayout.VISIBLE
                 mNameEditText.setText(state.user.name)
                 mAgeEditText.setText(state.user.age.toString())
                 mSexEditText.setText(state.user.sex)

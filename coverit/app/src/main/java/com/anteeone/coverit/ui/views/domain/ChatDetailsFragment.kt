@@ -10,8 +10,10 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anteeone.coverit.R
+import com.anteeone.coverit.ui.adapters.ChatDetailAdapter
 import com.anteeone.coverit.ui.utils.extensions._log
 import com.anteeone.coverit.ui.utils.extensions.insertViewModel
 import com.anteeone.coverit.ui.viewmodels.domain.ChatDetailsViewModel
@@ -28,6 +30,8 @@ class ChatDetailsFragment : BaseFragment() {
     private lateinit var mSendButton: ImageView
     private lateinit var mEditText: EditText
     private lateinit var mProgressBar: ProgressBar
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mAdapter: ChatDetailAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +50,7 @@ class ChatDetailsFragment : BaseFragment() {
         initMembers(view)
         initNavigation()
         initListeners()
-        viewModel.loadMessages(param1!!)
+        loadUsers()
         return view
     }
 
@@ -59,6 +63,9 @@ class ChatDetailsFragment : BaseFragment() {
         mSendButton = view.findViewById(R.id.fragment_chat_details_btn_send)
         mEditText = view.findViewById(R.id.fragment_chat_details_et)
         mProgressBar = view.findViewById(R.id.pb_chat_details)
+        mAdapter = ChatDetailAdapter()
+        mRecyclerView = view.findViewById(R.id.rv_chat_details)
+        mRecyclerView.adapter = mAdapter
     }
 
     override fun initListeners() {
@@ -67,7 +74,7 @@ class ChatDetailsFragment : BaseFragment() {
         }
         mSendButton.setOnClickListener {
             mProgressBar.visibility = ProgressBar.VISIBLE
-            viewModel.addMessage(mEditText.text.toString(),param1!!)
+            viewModel.addMessage(mEditText.text.toString(), param1!!)
         }
     }
 
@@ -77,20 +84,44 @@ class ChatDetailsFragment : BaseFragment() {
 
     override fun initViewModel() {
         viewModel = insertViewModel(viewModelFactory)
-        viewModel.messagesStateLiveData.observe(viewLifecycleOwner){
-            mProgressBar.visibility = ProgressBar.GONE
-            when(it){
+        viewModel.messagesStateLiveData.observe(viewLifecycleOwner) {
+            when (it) {
                 ChatDetailsViewModel.MessagesState.Empty -> {
-
+                    _log("messages size = empty")
                 }
                 ChatDetailsViewModel.MessagesState.Failure -> {
-
+                    hideLoading()
+                    _log("messages size = failure")
                 }
                 is ChatDetailsViewModel.MessagesState.Success -> {
                     _log("messages size = ${it.data.size}")
+                    mRecyclerView.scrollToPosition(mAdapter.itemCount)
+                    mAdapter.setData(it.data){
+                        hideLoading()
+                    }
+
                 }
             }
         }
+        viewModel.userIdLiveData.observe(viewLifecycleOwner) {
+            if (it != null && it.isNotEmpty()) mAdapter.setCurrentUser(it)
+        }
+    }
+
+    private fun loadUsers() {
+        showLoading()
+        viewModel.loadMessages(param1!!)
+
+    }
+
+    private fun showLoading() {
+        mProgressBar.visibility = ProgressBar.VISIBLE
+        mRecyclerView.visibility = RecyclerView.GONE
+    }
+
+    private fun hideLoading() {
+        mProgressBar.visibility = ProgressBar.GONE
+        mRecyclerView.visibility = RecyclerView.VISIBLE
     }
 
 }

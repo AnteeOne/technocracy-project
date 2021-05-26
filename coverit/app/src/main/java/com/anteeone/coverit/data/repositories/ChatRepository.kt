@@ -22,11 +22,11 @@ class ChatRepository @Inject constructor(
                 .get()
                 .addOnSuccessListener {
                     try{
-                        val dto = it.toObject(MessagesDto::class.java)
-                        cor.resumeWith(Result.success(dto!!.toMessagesList()))
+                        val dto = MessagesDto(it["messages"] as List<Map<String, String>>)
+                        cor.resumeWith(Result.success(dto.toMessagesList()))
                     }
                     catch (ex: Exception){
-                        cor.resumeWith(Result.failure(ex))
+                        cor.resumeWith(Result.success(emptyList()))
                     }
                 }
                 .addOnFailureListener {

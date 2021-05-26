@@ -6,13 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.anteeone.coverit.domain.models.MessageModel
 import com.anteeone.coverit.domain.usecases.chat.AddMessageUsecase
 import com.anteeone.coverit.domain.usecases.chat.GetMessagesUsecase
+import com.anteeone.coverit.domain.usecases.domain.GetUserUsecase
 import com.anteeone.coverit.domain.utils.Outcome
 import com.anteeone.coverit.ui.utils.extensions._log
 import javax.inject.Inject
 
 class ChatDetailsViewModel @Inject constructor(
     private val getMessagesUsecase: GetMessagesUsecase,
-    private val addMessageUsecase: AddMessageUsecase
+    private val addMessageUsecase: AddMessageUsecase,
+    private val getUserUsecase: GetUserUsecase
 ) : ViewModel() {
 
     sealed class MessagesState {
@@ -23,6 +25,10 @@ class ChatDetailsViewModel @Inject constructor(
 
     val messagesStateLiveData: MutableLiveData<MessagesState> =
         MutableLiveData(MessagesState.Empty)
+
+
+    val userIdLiveData: MutableLiveData<String> =
+        MutableLiveData()
 
     fun loadMessages(receiverId: String) {
         getMessagesUsecase(viewModelScope, GetMessagesUsecase.Params(receiverId)) {
@@ -49,6 +55,23 @@ class ChatDetailsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+
+    fun loadCurrentUser() {
+        getUserUsecase.invoke(viewModelScope, GetUserUsecase.Params(Unit)) {
+            when (it) {
+                is Outcome.Failure -> {
+                }
+                is Outcome.Success -> {
+                    userIdLiveData.postValue(it.data.id)
+                }
+            }
+        }
+    }
+
+    init {
+        loadCurrentUser()
     }
 
 }

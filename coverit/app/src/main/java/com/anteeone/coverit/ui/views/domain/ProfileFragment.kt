@@ -19,6 +19,7 @@ import com.anteeone.coverit.ui.utils.extensions.loadImage
 import com.anteeone.coverit.ui.viewmodels.domain.ProfileViewModel
 import com.anteeone.coverit.ui.views.BaseFragment
 import com.anteeone.coverit.ui.views.auth.AuthActivity
+import com.google.android.material.card.MaterialCardView
 
 class ProfileFragment : BaseFragment() {
 
@@ -33,6 +34,7 @@ class ProfileFragment : BaseFragment() {
     private lateinit var mVideoButton: Button
     private lateinit var mSwipeRefresh: SwipeRefreshLayout
     private lateinit var mProgressBar: ProgressBar
+    private lateinit var mMaterialCardView: MaterialCardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +69,7 @@ class ProfileFragment : BaseFragment() {
         mVideoButton = view.findViewById(R.id.fr_profile_btn_video)
         mSwipeRefresh = view.findViewById(R.id.srl_profile)
         mProgressBar = view.findViewById(R.id.pb_profile)
+        mMaterialCardView = view.findViewById(R.id.materialCardView)
     }
 
     override fun initListeners() {
@@ -101,6 +104,7 @@ class ProfileFragment : BaseFragment() {
                         viewModel.userState.postValue(ProfileViewModel.UserState.Empty.pack(false))
                     }
                     is ProfileViewModel.UserState.Success -> {
+                        mMaterialCardView.visibility = MaterialCardView.VISIBLE
                         val user = it.data.data
                         setUser(user)
                         mSwipeRefresh.isRefreshing = false
