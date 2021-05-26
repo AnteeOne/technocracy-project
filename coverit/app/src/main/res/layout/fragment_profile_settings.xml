@@ -102,14 +102,14 @@
             app:layout_constraintTop_toBottomOf="@id/fr_profile_settings_et_name" />
 
         <EditText
-            android:id="@+id/fr_profile_settings_et_sex"
+            android:id="@+id/fr_profile_settings_et_link"
             style="@style/editTextAppStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="16dp"
             android:drawableLeft="@drawable/chat"
-            android:hint="@string/sex"
+            android:hint="@string/link"
             android:inputType="text"
-            android:text="@string/sex"
+            android:text="@string/link"
             app:layout_constraintEnd_toEndOf="@id/guideline7"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@id/guideline7"
@@ -127,7 +127,7 @@
             app:layout_constraintEnd_toEndOf="@id/guideline7"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@id/guideline7"
-            app:layout_constraintTop_toBottomOf="@id/fr_profile_settings_et_sex" />
+            app:layout_constraintTop_toBottomOf="@id/fr_profile_settings_et_link" />
 
         <EditText
             android:id="@+id/fr_profile_settings_et_about"

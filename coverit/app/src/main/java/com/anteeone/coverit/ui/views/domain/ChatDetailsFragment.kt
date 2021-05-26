@@ -32,6 +32,7 @@ class ChatDetailsFragment : BaseFragment() {
     private lateinit var mProgressBar: ProgressBar
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: ChatDetailAdapter
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +64,7 @@ class ChatDetailsFragment : BaseFragment() {
         mSendButton = view.findViewById(R.id.fragment_chat_details_btn_send)
         mEditText = view.findViewById(R.id.fragment_chat_details_et)
         mProgressBar = view.findViewById(R.id.pb_chat_details)
+        mSwipeRefreshLayout = view.findViewById(R.id.srl_chat_details)
         mAdapter = ChatDetailAdapter()
         mRecyclerView = view.findViewById(R.id.rv_chat_details)
         mRecyclerView.adapter = mAdapter
@@ -75,6 +77,9 @@ class ChatDetailsFragment : BaseFragment() {
         mSendButton.setOnClickListener {
             mProgressBar.visibility = ProgressBar.VISIBLE
             viewModel.addMessage(mEditText.text.toString(), param1!!)
+        }
+        mSwipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadMessages(param1!!)
         }
     }
 
@@ -122,6 +127,7 @@ class ChatDetailsFragment : BaseFragment() {
     private fun hideLoading() {
         mProgressBar.visibility = ProgressBar.GONE
         mRecyclerView.visibility = RecyclerView.VISIBLE
+        mSwipeRefreshLayout.isRefreshing = false
     }
 
 }

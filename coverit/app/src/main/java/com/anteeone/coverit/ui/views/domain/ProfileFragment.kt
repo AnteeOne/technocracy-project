@@ -1,6 +1,7 @@
 package com.anteeone.coverit.ui.views.domain
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.anteeone.coverit.domain.models.User
 import com.anteeone.coverit.ui.utils.extensions._log
 import com.anteeone.coverit.ui.utils.extensions.insertViewModel
 import com.anteeone.coverit.ui.utils.extensions.loadImage
+import com.anteeone.coverit.ui.utils.extensions.openLink
 import com.anteeone.coverit.ui.viewmodels.domain.ProfileViewModel
 import com.anteeone.coverit.ui.views.BaseFragment
 import com.anteeone.coverit.ui.views.auth.AuthActivity
@@ -121,7 +123,7 @@ class ProfileFragment : BaseFragment() {
         mRole.text = user.role
         mAbout.text = user.about
         mVideoButton.setOnClickListener {
-            //todo
+            openLink(user.link)
         }
     }
 }
