@@ -23,4 +23,8 @@
         <item name="android:layout_height">@dimen/imageButtonSize</item>
         <item name="android:background">@drawable/custom_imageview_button</item>
     </style>
+
+    <style name="Button.Accent" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@color/accent</item>
+    </style>
 </resources>

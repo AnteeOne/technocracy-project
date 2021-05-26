@@ -7,16 +7,15 @@
     android:id="@+id/fragment_match"
     android:background="@color/transparent">
 
-
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:id="@+id/fragment_match_card"
+        android:layout_width="240dp"
+        android:layout_height="80dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:cardCornerRadius="24dp"
+        app:cardCornerRadius="16dp"
         app:cardBackgroundColor="@color/gray_transparent"
-        android:background="@color/gray_transparent"
-        app:cardForegroundColor="@color/gray_transparent"
+        android:backgroundTint="@color/gray_transparent"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +24,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/gray_transparent">
 
             <TextView
                 android:layout_width="wrap_content"

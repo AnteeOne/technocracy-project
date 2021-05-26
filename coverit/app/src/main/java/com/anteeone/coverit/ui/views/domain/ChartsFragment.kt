@@ -15,6 +15,7 @@ import com.anteeone.coverit.R
 import com.anteeone.coverit.ui.adapters.ChartsAdapter
 import com.anteeone.coverit.ui.utils.extensions._log
 import com.anteeone.coverit.ui.utils.extensions.insertViewModel
+import com.anteeone.coverit.ui.utils.extensions.openLink
 import com.anteeone.coverit.ui.viewmodels.domain.ChartsViewModel
 import com.anteeone.coverit.ui.views.BaseFragment
 
@@ -54,7 +55,7 @@ class ChartsFragment : BaseFragment() {
         mRecyclerView = view.findViewById(R.id.rv_charts)
         mBackButton = view.findViewById(R.id.fr_charts_btn_back)
         mAdapter = ChartsAdapter {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it.url)))
+            openLink(it.url)
         }.also { mRecyclerView.adapter = it }
     }
 

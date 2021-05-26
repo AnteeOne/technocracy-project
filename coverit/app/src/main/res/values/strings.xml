@@ -19,6 +19,10 @@
     <string name="dartist">Lil Nas X</string>
     <string name="dcount">3756285</string>
     <string name="matches">Matches</string>
-    <string name="charts">Top 30</string>x
+    <string name="charts">Top 30</string>
+    <string name="thats_all">That\'s all for today!</string>
+    <string name="chat">Chat</string>
+    <string name="type_message">Type message...</string>
+    <string name="link">Link</string>x
 
 </resources>

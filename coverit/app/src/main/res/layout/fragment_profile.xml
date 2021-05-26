@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_home"
+        android:background="@drawable/splash_gradient_poison"
         tools:context=".ui.views.domain.ProfileFragment">
 
         <ProgressBar
@@ -75,10 +75,11 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="628dp"
+            android:layout_height="0dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="40dp"
             app:cardBackgroundColor="@color/gray_transparent"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
@@ -89,6 +90,9 @@
             app:layout_constraintTop_toTopOf="@+id/guideline114"
             app:layout_constraintVertical_bias="0.16">
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -213,7 +217,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="113dp"
                     android:layout_marginEnd="129dp"
+                    android:layout_marginBottom="40dp"
                     android:background="@drawable/custom_video_button"
+                    android:theme="@style/Button.Accent"
                     android:text="@string/video"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="@+id/cardView"
@@ -222,7 +228,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
+            </ScrollView>
         </com.google.android.material.card.MaterialCardView>
 
         <ImageView

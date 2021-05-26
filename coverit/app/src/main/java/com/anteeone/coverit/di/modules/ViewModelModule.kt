@@ -53,4 +53,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ChartsViewModel::class)
     abstract fun bindsChartsViewModel(chartsViewModel: ChartsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChatDetailsViewModel::class)
+    abstract fun bindsChatDetailsViewModel(chatDetailsViewModel: ChatDetailsViewModel): ViewModel
 }

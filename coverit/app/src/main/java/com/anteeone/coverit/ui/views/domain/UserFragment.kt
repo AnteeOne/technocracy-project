@@ -1,5 +1,7 @@
 package com.anteeone.coverit.ui.views.domain
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.anteeone.coverit.R
 import com.anteeone.coverit.domain.models.User
 import com.anteeone.coverit.ui.utils.extensions.loadImage
+import com.anteeone.coverit.ui.utils.extensions.openLink
 import com.anteeone.coverit.ui.views.BaseFragment
 
 class UserFragment : BaseFragment() {
@@ -62,7 +65,7 @@ class UserFragment : BaseFragment() {
         mRole.text = mUser.role
         mAbout.text = mUser.about
         mVideoButton.setOnClickListener {
-            //todo
+            openLink(mUser.link)
         }
     }
 

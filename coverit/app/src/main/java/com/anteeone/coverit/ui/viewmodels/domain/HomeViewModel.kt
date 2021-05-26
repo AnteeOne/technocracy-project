@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anteeone.coverit.domain.models.User
+import com.anteeone.coverit.domain.usecases.chat.CreateChatUsecase
 import com.anteeone.coverit.domain.usecases.domain.CheckMatchingUsecase
 import com.anteeone.coverit.domain.usecases.domain.DislikeUserUsecase
 import com.anteeone.coverit.domain.usecases.domain.GetPotentialUsersUsecase
@@ -17,7 +18,8 @@ class HomeViewModel @Inject constructor(
     private val getPotentialUsersUsecase: GetPotentialUsersUsecase,
     private val likeUserUsecase: LikeUserUsecase,
     private val dislikeUserUsecase: DislikeUserUsecase,
-    private val checkMatchingUsecase: CheckMatchingUsecase
+    private val checkMatchingUsecase: CheckMatchingUsecase,
+    private val createChatUsecase: CreateChatUsecase
 ): ViewModel() {
 
     sealed class MatchedUserState(){
@@ -99,8 +101,10 @@ class HomeViewModel @Inject constructor(
         checkMatchingUsecase.invoke(viewModelScope,CheckMatchingUsecase.Params(user.id)){
             when(it){
                 is Outcome.Success -> {
-                    if(it.data)
-                        matchedUserState.postValue(Container(MatchedUserState.Success(user),true))
+                    if(it.data) {
+                        matchedUserState.postValue(Container(MatchedUserState.Success(user), true))
+                        createChatUsecase.invoke(viewModelScope,CreateChatUsecase.Params(user.id))
+                    }
                 }
                 is Outcome.Failure -> {
 

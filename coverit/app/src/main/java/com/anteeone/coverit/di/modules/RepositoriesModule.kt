@@ -1,9 +1,11 @@
 package com.anteeone.coverit.di.modules
 
 import com.anteeone.coverit.data.repositories.AuthRepository
+import com.anteeone.coverit.data.repositories.ChatRepository
 import com.anteeone.coverit.data.repositories.FireStorageRepository
 import com.anteeone.coverit.data.repositories.UsersRepository
 import com.anteeone.coverit.domain.repositories.IAuthRepository
+import com.anteeone.coverit.domain.repositories.IChatRepository
 import com.anteeone.coverit.domain.repositories.IFireStorageRepository
 import com.anteeone.coverit.domain.repositories.IUsersRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -36,4 +38,9 @@ class RepositoriesModule {
         firebaseAuth: FirebaseAuth
     ): IFireStorageRepository =
         FireStorageRepository(storageReference, firebaseAuth)
+
+    @Provides
+    @Singleton
+    fun providesChatRepository(firebaseDatabase: FirebaseFirestore): IChatRepository =
+        ChatRepository(firebaseDatabase)
 }

@@ -4,7 +4,6 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -37,12 +37,13 @@ class ProfileSettingsFragment : BaseFragment() {
     private lateinit var mUpdateButton: Button
     private lateinit var mNameEditText: EditText
     private lateinit var mAgeEditText: EditText
-    private lateinit var mSexEditText: EditText
+    private lateinit var mLinkEditText: EditText
     private lateinit var mRoleEditText: EditText
     private lateinit var mAboutEditText: EditText
     private lateinit var mAvatar: ImageView
     private lateinit var mSwipeRefresh: SwipeRefreshLayout
     private lateinit var mProgressBar: ProgressBar
+    private lateinit var mContainer: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,12 +74,13 @@ class ProfileSettingsFragment : BaseFragment() {
         mPhotoButton = view.findViewById(R.id.fr_profile_settings_btn_change_photo)
         mNameEditText = view.findViewById(R.id.fr_profile_settings_et_name)
         mAgeEditText = view.findViewById(R.id.fr_profile_settings_et_age)
-        mSexEditText = view.findViewById(R.id.fr_profile_settings_et_sex)
+        mLinkEditText = view.findViewById(R.id.fr_profile_settings_et_link)
         mRoleEditText = view.findViewById(R.id.fr_profile_settings_et_role)
         mAboutEditText = view.findViewById(R.id.fr_profile_settings_et_about)
         mAvatar = view.findViewById(R.id.fr_profile_settings_avatar)
         mSwipeRefresh = view.findViewById(R.id.srl_profile_settings)
         mProgressBar = view.findViewById(R.id.pb_profile_settings)
+        mContainer = view.findViewById(R.id.fr_profile_settings_container)
     }
 
     override fun initListeners() {
@@ -92,7 +94,7 @@ class ProfileSettingsFragment : BaseFragment() {
                     User(
                         name = mNameEditText.text.toString(),
                         age = mAgeEditText.text.toString().toLong(),
-                        sex = mSexEditText.text.toString(),
+                        link = mLinkEditText.text.toString(),
                         role = mRoleEditText.text.toString(),
                         about = mAboutEditText.text.toString()
                     )
@@ -102,7 +104,7 @@ class ProfileSettingsFragment : BaseFragment() {
                     User(
                         name = mNameEditText.text.toString(),
                         age = 0,
-                        sex = mSexEditText.text.toString(),
+                        link = mLinkEditText.text.toString(),
                         role = mRoleEditText.text.toString(),
                         about = mAboutEditText.text.toString()
                     )
@@ -149,9 +151,10 @@ class ProfileSettingsFragment : BaseFragment() {
             }
             is ProfileSettingsViewModel.UserDataState.Success -> {
                 mSwipeRefresh.isRefreshing = false
+                mContainer.visibility = ConstraintLayout.VISIBLE
                 mNameEditText.setText(state.user.name)
                 mAgeEditText.setText(state.user.age.toString())
-                mSexEditText.setText(state.user.sex)
+                mLinkEditText.setText(state.user.link)
                 mRoleEditText.setText(state.user.role)
                 mAboutEditText.setText(state.user.about)
                 mAvatar.loadImage(state.user.avatarUri)

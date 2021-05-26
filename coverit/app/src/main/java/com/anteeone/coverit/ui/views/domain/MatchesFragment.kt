@@ -1,11 +1,9 @@
 package com.anteeone.coverit.ui.views.domain
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.lifecycle.observe
@@ -14,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anteeone.coverit.R
 import com.anteeone.coverit.ui.adapters.MatchesAdapter
-import com.anteeone.coverit.ui.adapters.UsersAdapter
 import com.anteeone.coverit.ui.utils.extensions._log
 import com.anteeone.coverit.ui.utils.extensions.insertViewModel
 import com.anteeone.coverit.ui.viewmodels.domain.MatchesViewModel

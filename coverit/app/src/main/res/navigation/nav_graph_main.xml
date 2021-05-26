@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_chatFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_chatDetailsFragment"
+            app:destination="@id/chatDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -113,4 +116,16 @@
             app:destination="@id/homeFragment" />
 
     </dialog>
+    <fragment
+        android:id="@+id/chatDetailsFragment"
+        android:name="com.anteeone.coverit.ui.views.domain.ChatDetailsFragment"
+        android:label="fragment_chat_details"
+        tools:layout="@layout/fragment_chat_details" >
+        <action
+            android:id="@+id/action_chatDetailsFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <argument
+            android:name="receiverId"
+            app:argType="string" />
+    </fragment>
 </navigation>
